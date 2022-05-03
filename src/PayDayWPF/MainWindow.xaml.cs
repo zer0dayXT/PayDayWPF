@@ -11,15 +11,5 @@ namespace PayDayWPF
         {
             InitializeComponent();
         }
-
-        private void OnQuit(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Shutdown();
-        }
-
-        private void OnAdd(object sender, RoutedEventArgs e)
-        {
-            
-        }
     }
 }
