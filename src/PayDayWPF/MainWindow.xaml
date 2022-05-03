@@ -20,7 +20,7 @@
         <Button x:Name="markButton" Content="Mark" Grid.Column="2" FontFamily="Segoe UI Black" FontSize="22"/>
         <Button x:Name="remainingButton" Content="Remaining" Grid.Column="3" FontFamily="Segoe UI Black" FontSize="22"/>
         <Button x:Name="statisticsButton" Content="Statistics" Grid.Column="4" FontFamily="Segoe UI Black" FontSize="22"/>
-        <Button x:Name="quitButton" Content="Quit" Grid.Column="5" FontFamily="Segoe UI Black" FontSize="22"/>
+        <Button x:Name="quitButton" Content="Quit" Grid.Column="5" FontFamily="Segoe UI Black" FontSize="22" Click="OnQuit"/>
     </Grid>
     
 </Window>
