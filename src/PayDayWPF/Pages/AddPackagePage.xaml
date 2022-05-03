@@ -1,4 +1,4 @@
-﻿<Page x:Class="PayDayWPF.Pages.AddMenu"
+﻿<Page x:Class="PayDayWPF.Pages.AddPackagePage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -14,7 +14,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <TextBox TextWrapping="Wrap" Text="TextBox" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150"/>
-        <Button Content="Button" Grid.Column="2" HorizontalAlignment="Stretch"/>
+        <Button Content="Add" Grid.Column="2" HorizontalAlignment="Stretch"/>
 
     </Grid>
 </Page>

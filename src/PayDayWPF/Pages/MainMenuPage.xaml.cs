@@ -6,9 +6,9 @@ namespace PayDayWPF.Pages
     /// <summary>
     /// Interaction logic for MainMenu.xaml
     /// </summary>
-    public partial class MainMenu : Page
+    public partial class MainMenuPage : Page
     {
-        public MainMenu()
+        public MainMenuPage()
         {
             InitializeComponent();
         }
@@ -20,7 +20,7 @@ namespace PayDayWPF.Pages
 
         private void OnAdd(object sender, RoutedEventArgs e)
         {
-            ((MainWindow)Application.Current.MainWindow).ChangePage(new AddMenu());
+            ((MainWindow)Application.Current.MainWindow).ChangePage(new AddPackagePage());
         }
     }
 }

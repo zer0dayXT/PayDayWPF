@@ -5,9 +5,9 @@ namespace PayDayWPF.Pages
     /// <summary>
     /// Interaction logic for AddMenu.xaml
     /// </summary>
-    public partial class AddMenu : Page
+    public partial class AddPackagePage : Page
     {
-        public AddMenu()
+        public AddPackagePage()
         {
             InitializeComponent();
         }

@@ -22,7 +22,7 @@ namespace PayDayWPF
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            ChangePage(new MainMenu());
+            ChangePage(new MainMenuPage());
         }
     }
 }
