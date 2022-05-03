@@ -16,5 +16,10 @@ namespace PayDayWPF
         {
             Application.Current.Shutdown();
         }
+
+        private void OnAdd(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }
