@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using PayDayWPF.Pages;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace PayDayWPF
@@ -14,17 +15,7 @@ namespace PayDayWPF
             Loaded += OnLoaded;
         }
 
-        public void ChangePage(MainMenu page)
-        {
-            NavigationFrame.NavigationService.Navigate(page);
-        }
-
-        public void ChangePage(AddMenu page)
-        {
-            NavigationFrame.NavigationService.Navigate(page);
-        }
-
-        public void ChangePage(MainMenu page)
+        public void ChangePage(Page page)
         {
             NavigationFrame.NavigationService.Navigate(page);
         }

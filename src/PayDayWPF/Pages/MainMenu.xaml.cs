@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace PayDayWPF
+namespace PayDayWPF.Pages
 {
     /// <summary>
     /// Interaction logic for MainMenu.xaml
@@ -20,7 +20,7 @@ namespace PayDayWPF
 
         private void OnAdd(object sender, RoutedEventArgs e)
         {
-
+            ((MainWindow)Application.Current.MainWindow).ChangePage(new AddMenu());
         }
     }
 }
