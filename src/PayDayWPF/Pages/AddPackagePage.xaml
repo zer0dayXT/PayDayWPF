@@ -22,21 +22,21 @@
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Label Content="Name"/>
-                <TextBox TextWrapping="Wrap" Text="TextBox" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150"/>
+                <TextBox x:Name="NameTextBox" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150"/>
             </StackPanel>
             <StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Label Content="Duration"/>
-                <TextBox TextWrapping="Wrap" Text="TextBox" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150"/>
+                <TextBox x:Name="DurationTextBox" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150"/>
             </StackPanel>
             <StackPanel Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Label Content="Profit"/>
-                <TextBox TextWrapping="Wrap" Text="TextBox" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150"/>
+                <TextBox x:Name="ProfitTextBox" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150"/>
             </StackPanel>
             <StackPanel Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Label Content="Count"/>
-                <TextBox TextWrapping="Wrap" Text="TextBox" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150"/>
+                <TextBox x:Name="CountTextBox" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150"/>
             </StackPanel>
         </Grid>
-        <Button Content="Add" Grid.Column="1" HorizontalAlignment="Stretch"/>
+        <Button Content="Add" Grid.Column="1" HorizontalAlignment="Stretch" Click="OnAdd"/>
     </Grid>
 </Page>

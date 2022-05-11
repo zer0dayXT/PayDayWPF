@@ -1,4 +1,8 @@
-﻿using System.Windows.Controls;
+﻿using Microsoft.Extensions.DependencyInjection;
+using PayDayWPF.Infrastructure;
+using PayDayWPF.Persistence;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace PayDayWPF.Pages
 {
@@ -7,9 +11,24 @@ namespace PayDayWPF.Pages
     /// </summary>
     public partial class AddPackagePage : Page
     {
+        private IRepository _repository;
+        
         public AddPackagePage()
         {
             InitializeComponent();
+            _repository = ((MainWindow)Application.Current.MainWindow).
+                ServiceProvider.GetService<IRepository>();
+        }
+
+        private async void OnAdd(object sender, RoutedEventArgs e)
+        {
+            await _repository.AddPackage(new Package
+            {
+                Name = NameTextBox.Text,
+                Duration = int.Parse(DurationTextBox.Text),
+                MeetingProfit = decimal.Parse(ProfitTextBox.Text),
+                MeetingCount = int.Parse(CountTextBox.Text)
+            });
         }
     }
 }

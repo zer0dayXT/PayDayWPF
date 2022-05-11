@@ -14,7 +14,7 @@ namespace PayDayWPF.Persistence.Implementation
         {
             using (var reader = new StreamReader(Path))
             {
-                return JsonConvert.DeserializeObject<List<Package>>(await reader.ReadLineAsync());
+                return JsonConvert.DeserializeObject<List<Package>>(await reader.ReadToEndAsync());
             }
         }
 
@@ -24,7 +24,7 @@ namespace PayDayWPF.Persistence.Implementation
             packages.Add(package);
             using (var streamWriter = new StreamWriter(Path))
             {
-                streamWriter.WriteLine(JsonConvert.SerializeObject(packages));
+                streamWriter.WriteLine(JsonConvert.SerializeObject(packages, Formatting.Indented));
             }
         }
     }
