@@ -1,17 +1,10 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using PayDayWPF.Infrastructure;
+using PayDayWPF.Persistence;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace PayDayWPF.Pages
 {
@@ -20,9 +13,21 @@ namespace PayDayWPF.Pages
     /// </summary>
     public partial class MarkMeetingPage : Page
     {
+        private IRepository _repository;
+
+        public List<Package> Packages { get; set; } = new List<Package>();
+
         public MarkMeetingPage()
         {
+            _repository = ((MainWindow)Application.Current.MainWindow).
+                ServiceProvider.GetService<IRepository>();
             InitializeComponent();
+        }
+
+        protected override async void OnInitialized(EventArgs e)
+        {
+            base.OnInitialized(e);
+            Packages.AddRange(await _repository.Load());
         }
     }
 }

@@ -15,9 +15,9 @@ namespace PayDayWPF.Pages
         
         public AddPackagePage()
         {
-            InitializeComponent();
             _repository = ((MainWindow)Application.Current.MainWindow).
                 ServiceProvider.GetService<IRepository>();
+            InitializeComponent();
         }
 
         private async void OnAdd(object sender, RoutedEventArgs e)

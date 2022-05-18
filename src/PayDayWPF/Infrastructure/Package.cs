@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace PayDayWPF.Infrastructure
 {
-    internal class Package
+    public class Package
     {
         public string Name { get; set; }
         public int Duration { get; set; }
