@@ -36,5 +36,12 @@ namespace PayDayWPF.Pages
                 .ToList();
             Packages.AddRange(filteredPackages);
         }
+
+        private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var firstSelectedPackage = ((object[])e.AddedItems)
+                .Select(e => (Package)e)
+                .First();
+        }
     }
 }
