@@ -3,6 +3,7 @@ using PayDayWPF.Infrastructure;
 using PayDayWPF.Persistence;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -27,7 +28,13 @@ namespace PayDayWPF.Pages
         protected override async void OnInitialized(EventArgs e)
         {
             base.OnInitialized(e);
-            Packages.AddRange(await _repository.Load());
+            var packages = await _repository.Load();
+            var filteredPackages = packages
+                .Where(e => e.MeetingsHeld.Count < e.MeetingCount)
+                .GroupBy(e => e.Name)
+                .Select(e => e.First())
+                .ToList();
+            Packages.AddRange(filteredPackages);
         }
     }
 }
