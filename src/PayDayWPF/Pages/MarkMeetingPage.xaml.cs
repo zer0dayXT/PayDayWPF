@@ -17,6 +17,7 @@ namespace PayDayWPF.Pages
         private IRepository _repository;
 
         public List<Package> Packages { get; set; } = new List<Package>();
+        public List<Package> SelectedPackages { get; set; } = new List<Package>();
 
         public MarkMeetingPage()
         {
@@ -42,6 +43,7 @@ namespace PayDayWPF.Pages
             var firstSelectedPackage = ((object[])e.AddedItems)
                 .Select(e => (Package)e)
                 .First();
+            SelectedPackages.Add(firstSelectedPackage);
         }
     }
 }
