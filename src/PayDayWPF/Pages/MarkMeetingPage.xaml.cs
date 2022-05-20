@@ -3,6 +3,7 @@ using PayDayWPF.Infrastructure;
 using PayDayWPF.Persistence;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,8 +17,8 @@ namespace PayDayWPF.Pages
     {
         private IRepository _repository;
 
-        public List<Package> Packages { get; set; } = new List<Package>();
-        public List<Package> SelectedPackages { get; set; } = new List<Package>();
+        public ObservableCollection<Package> Packages { get; set; } = new ObservableCollection<Package>();
+        public ObservableCollection<Package> SelectedPackages { get; set; } = new ObservableCollection<Package>();
 
         public MarkMeetingPage()
         {
@@ -35,7 +36,10 @@ namespace PayDayWPF.Pages
                 .GroupBy(e => e.Name)
                 .Select(e => e.First())
                 .ToList();
-            Packages.AddRange(filteredPackages);
+            foreach (var filteredPackage in filteredPackages)
+            {
+                Packages.Add(filteredPackage);
+            }
         }
 
         private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
