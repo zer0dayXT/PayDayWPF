@@ -42,12 +42,23 @@ namespace PayDayWPF.Pages
             }
         }
 
-        private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void OnSelectionChangedLeft(object sender, SelectionChangedEventArgs e)
         {
             var firstSelectedPackage = ((object[])e.AddedItems)
                 .Select(e => (Package)e)
                 .First();
             SelectedPackages.Add(firstSelectedPackage);
+        }
+
+        private void OnSelectionChangedRight(object sender, SelectionChangedEventArgs e)
+        {
+            var firstSelectedPackage = ((object[])e.AddedItems)
+                .Select(e => (Package)e)
+                .FirstOrDefault();
+            if (firstSelectedPackage != null)
+            {
+                SelectedPackages.Remove(firstSelectedPackage);
+            }
         }
     }
 }
