@@ -18,7 +18,9 @@ namespace PayDayWPF.Pages
         private IRepository _repository;
 
         public ObservableCollection<Package> Packages { get; set; } = new ObservableCollection<Package>();
-        public ObservableCollection<Package> SelectedPackages { get; set; } = new ObservableCollection<Package>();
+        public ObservableCollection<Package> HeldMeetings { get; set; } = new ObservableCollection<Package>();
+        public ObservableCollection<Package> UnheldMeetings { get; set; } = new ObservableCollection<Package>();
+
 
         public MarkMeetingPage()
         {
@@ -47,7 +49,7 @@ namespace PayDayWPF.Pages
             var firstSelectedPackage = ((object[])e.AddedItems)
                 .Select(e => (Package)e)
                 .First();
-            SelectedPackages.Add(firstSelectedPackage);
+            HeldMeetings.Add(firstSelectedPackage);
         }
 
         private void OnSelectionChangedRight(object sender, SelectionChangedEventArgs e)
@@ -57,18 +59,18 @@ namespace PayDayWPF.Pages
                 .FirstOrDefault();
             if (firstSelectedPackage != null)
             {
-                SelectedPackages.Remove(firstSelectedPackage);
+                HeldMeetings.Remove(firstSelectedPackage);
             }
         }
 
         private async void OnMark(object sender, RoutedEventArgs e)
         {
-            foreach (var package in SelectedPackages)
+            foreach (var package in HeldMeetings)
             {
                 package.MeetingsHeld.Add(calendar.SelectedDate.Value);
                 await _repository.UpdateMeetings(package.Id, package.MeetingsHeld);
             }
-            SelectedPackages.Clear();
+            HeldMeetings.Clear();
         }
     }
 }

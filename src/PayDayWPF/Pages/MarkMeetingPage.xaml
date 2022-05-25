@@ -22,13 +22,26 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <ListBox Grid.Column="1" ItemsSource="{Binding Path=SelectedPackages, ElementName=page}" SelectionChanged="OnSelectionChangedRight">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Name}"/>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <ListBox ItemsSource="{Binding Path=HeldMeetings, ElementName=page}" SelectionChanged="OnSelectionChangedRight">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <ListBox Grid.Row="1" ItemsSource="{Binding Path=UnheldMeetings, ElementName=page}" SelectionChanged="OnSelectionChangedRight">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
         <Grid Grid.Column="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="2*" />
