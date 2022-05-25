@@ -60,5 +60,13 @@ namespace PayDayWPF.Pages
                 SelectedPackages.Remove(firstSelectedPackage);
             }
         }
+
+        private void OnMark(object sender, RoutedEventArgs e)
+        {
+            foreach (var package in Packages)
+            {
+                package.MeetingsHeld.Add(calendar.DisplayDate);
+            }
+        }
     }
 }

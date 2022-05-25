@@ -5,6 +5,7 @@ namespace PayDayWPF.Infrastructure
 {
     public class Package
     {
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public int Duration { get; set; }
         public decimal MeetingProfit { get; set; }

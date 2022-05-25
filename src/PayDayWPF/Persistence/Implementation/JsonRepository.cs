@@ -1,7 +1,9 @@
 ﻿using Newtonsoft.Json;
 using PayDayWPF.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PayDayWPF.Persistence.Implementation
@@ -22,9 +24,22 @@ namespace PayDayWPF.Persistence.Implementation
         {
             var packages = await Load();
             packages.Add(package);
+            await SaveAll(packages);
+        }
+
+        public async Task UpdateMeetings(Guid id, List<DateTime> meetingsHeld)
+        {
+            var packages = await Load();
+            var package = packages.Single(e => e.Id == id);
+            package.MeetingsHeld = meetingsHeld;
+            await SaveAll(packages);
+        }
+
+        private async Task SaveAll(List<Package> packages)
+        {
             using (var streamWriter = new StreamWriter(Path))
             {
-                streamWriter.WriteLine(JsonConvert.SerializeObject(packages, Formatting.Indented));
+                await streamWriter.WriteLineAsync(JsonConvert.SerializeObject(packages, Formatting.Indented));
             }
         }
     }
