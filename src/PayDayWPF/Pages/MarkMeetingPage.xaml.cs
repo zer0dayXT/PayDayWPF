@@ -61,12 +61,14 @@ namespace PayDayWPF.Pages
             }
         }
 
-        private void OnMark(object sender, RoutedEventArgs e)
+        private async void OnMark(object sender, RoutedEventArgs e)
         {
-            foreach (var package in Packages)
+            foreach (var package in SelectedPackages)
             {
-                package.MeetingsHeld.Add(calendar.DisplayDate);
+                package.MeetingsHeld.Add(calendar.SelectedDate.Value);
+                await _repository.UpdateMeetings(package.Id, package.MeetingsHeld);
             }
+            SelectedPackages.Clear();
         }
     }
 }
