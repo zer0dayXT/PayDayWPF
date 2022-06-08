@@ -15,10 +15,10 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <ListBox ItemsSource="{Binding Path=Packages, ElementName=page}" SelectionChanged="OnSelectionChangedLeft">
+        <ListBox ItemsSource="{Binding Path=Packages, ElementName=page}" PreviewMouseLeftButtonDown="ListBox_PreviewMouseLeftButtonDown">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Name}"/>
+                    <TextBlock Text="{Binding Name}" PreviewMouseLeftButtonDown="TextBlock_PreviewMouseLeftButtonDown"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>

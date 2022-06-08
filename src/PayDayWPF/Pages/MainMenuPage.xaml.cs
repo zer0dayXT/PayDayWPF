@@ -27,5 +27,10 @@ namespace PayDayWPF.Pages
         {
             ((MainWindow)Application.Current.MainWindow).ChangePage(new MarkMeetingPage());
         }
+
+        private void OnRemaining(object sender, RoutedEventArgs e)
+        {
+            ((MainWindow)Application.Current.MainWindow).ChangePage(new RemainingMeetingsPage());
+        }
     }
 }

@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace PayDayWPF.Pages
 {
@@ -44,14 +45,6 @@ namespace PayDayWPF.Pages
             }
         }
 
-        private void OnSelectionChangedLeft(object sender, SelectionChangedEventArgs e)
-        {
-            var firstSelectedPackage = ((object[])e.AddedItems)
-                .Select(e => (Package)e)
-                .First();
-            HeldMeetings.Add(firstSelectedPackage);
-        }
-
         private void OnSelectionChangedRight(object sender, SelectionChangedEventArgs e)
         {
             var firstSelectedPackage = ((object[])e.AddedItems)
@@ -71,6 +64,16 @@ namespace PayDayWPF.Pages
                 await _repository.UpdateMeetings(package.Id, package.MeetingsHeld);
             }
             HeldMeetings.Clear();
+        }
+
+        private void TextBlock_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void ListBox_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
         }
     }
 }
