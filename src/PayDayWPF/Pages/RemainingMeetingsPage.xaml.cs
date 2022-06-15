@@ -2,6 +2,7 @@
 using PayDayWPF.Infrastructure;
 using PayDayWPF.Persistence;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -17,7 +18,8 @@ namespace PayDayWPF.Pages
         private IRepository _repository;
 
         public ObservableCollection<RemainingItem> Remaining { get; set; } = new ObservableCollection<RemainingItem>();
-
+        public ObservableCollection<RemainingItem> Completed { get; set; } = new ObservableCollection<RemainingItem>();
+        
         public RemainingMeetingsPage()
         {
             _repository = ((MainWindow)Application.Current.MainWindow).
@@ -29,6 +31,12 @@ namespace PayDayWPF.Pages
         {
             base.OnInitialized(e);
             var packages = await _repository.Load();
+            HandleMiddleList(packages);
+            HandleRightList(packages);
+        }
+
+        private void HandleMiddleList(List<Package> packages)
+        {
             var filteredPackages = packages
                 .Where(e => e.MeetingsHeld.Count != e.MeetingCount);
             filteredPackages = filteredPackages
@@ -52,5 +60,24 @@ namespace PayDayWPF.Pages
                 });
             }
         }
+
+        private void HandleRightList(List<Package> packages)
+        {
+            var filteredPackages = packages
+                .Where(e => e.MeetingsHeld.Count == e.MeetingCount)
+                .DistinctBy(e => e.Name)
+                .OrderBy(e => e.Name);
+
+            foreach (var package in filteredPackages)
+            {
+                var color = "#FF0000";
+                Completed.Add(new RemainingItem
+                {
+                    Name = package.Name,
+                    Color = color
+                });
+            }
+        }
+
     }
 }
