@@ -25,8 +25,8 @@ namespace PayDayWPF.Pages
 
         public MarkMeetingPage()
         {
-            _repository = ((MainWindow)Application.Current.MainWindow).
-                ServiceProvider.GetService<IRepository>();
+            _repository = ((MainWindow)Application.Current.MainWindow)
+                .ServiceProvider.GetService<IRepository>();
             InitializeComponent();
         }
 
