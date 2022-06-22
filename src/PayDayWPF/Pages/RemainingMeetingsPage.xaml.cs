@@ -16,7 +16,7 @@ namespace PayDayWPF.Pages
     public partial class RemainingMeetingsPage : Page
     {
         private IRepository _repository;
-
+        public ObservableCollection<RemainingItem> RecentlyCompleted { get; set; } = new ObservableCollection<RemainingItem>();
         public ObservableCollection<RemainingItem> Remaining { get; set; } = new ObservableCollection<RemainingItem>();
         public ObservableCollection<RemainingItem> Completed { get; set; } = new ObservableCollection<RemainingItem>();
         
@@ -31,8 +31,28 @@ namespace PayDayWPF.Pages
         {
             base.OnInitialized(e);
             var packages = await _repository.Load();
+            HandleLeftList(packages);
             HandleMiddleList(packages);
             HandleRightList(packages);
+        }
+
+        private void HandleLeftList(List<Package> packages)
+        {
+            var filteredPackages = packages
+                .Where(e => e.MeetingsHeld.Count == e.MeetingCount)
+                .Where(e => e.MeetingsHeld.Last() >= (DateTime.Now - TimeSpan.FromDays(10)))
+                .DistinctBy(e => e.Name)
+                .OrderBy(e => e.Name);
+
+            foreach (var package in filteredPackages)
+            {
+                var color = "#FF0000";
+                RecentlyCompleted.Add(new RemainingItem
+                {
+                    Name = package.Name,
+                    Color = color
+                });
+            }
         }
 
         private void HandleMiddleList(List<Package> packages)
