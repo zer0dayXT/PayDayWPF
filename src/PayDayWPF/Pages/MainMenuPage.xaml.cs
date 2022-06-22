@@ -32,5 +32,10 @@ namespace PayDayWPF.Pages
         {
             ((MainWindow)Application.Current.MainWindow).ChangePage(new RemainingMeetingsPage());
         }
+
+        private void OnStatistics(object sender, RoutedEventArgs e)
+        {
+            ((MainWindow)Application.Current.MainWindow).ChangePage(new StatisticsPage());
+        }
     }
 }
