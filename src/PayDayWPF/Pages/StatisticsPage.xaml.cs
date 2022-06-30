@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -21,6 +22,7 @@ namespace PayDayWPF.Pages
         public SeriesCollection SeriesCollection { get; set; }
         public AxesCollection AxesYCollection { get; set; }
         public AxesCollection Labels { get; set; }
+        public decimal[] MonthlyIncome { get; set; }
 
         public StatisticsPage()
         {
@@ -69,19 +71,31 @@ namespace PayDayWPF.Pages
         protected override async void OnInitialized(EventArgs e)
         {
             base.OnInitialized(e);
+            await OverallStatistics();
+        }
+
+        private async Task OverallStatistics()
+        {
+            MonthlyIncome = new decimal[12];
+            var now = DateTime.Now;
+            var lastSeptember = new DateTime(now.Year, 9, 1);
+            if (lastSeptember > now)
+            {
+                lastSeptember = lastSeptember.AddYears(-1);
+            }
             var packages = await _repository.Load();
             var filteredPackages = packages
-                .Where(e => e.MeetingsHeld.Any(f =>
-                {
-                    var now = DateTime.Now;
-                    var lastSeptember = new DateTime(now.Year, 9, 1);
-                    if (lastSeptember > now)
-                    {
-                        lastSeptember = lastSeptember.AddYears(-1);
-                    }
-                    return f >= lastSeptember;
-                }))
+                .Where(e => e.MeetingsHeld.Any(f => f >= lastSeptember))
                 .ToList();
+            foreach (var package in filteredPackages)
+            {
+                var filteredMeetingsHeld = package.MeetingsHeld
+                    .Where(e => e >= lastSeptember);
+                foreach (var meetingsHeld in filteredMeetingsHeld)
+                {
+                    MonthlyIncome[meetingsHeld.Month-1] = package.MeetingProfit;
+                }
+            }
         }
     }
 }
