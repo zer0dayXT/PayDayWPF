@@ -19,7 +19,7 @@
                             <ColumnDefinition Width="3*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <lvc:CartesianChart Series="{Binding SeriesCollection, ElementName=page}" />
+                        <lvc:CartesianChart Series="{Binding SeriesCollection, ElementName=page}" AxisY="{Binding AxesYCollection, ElementName=page}" AxisX="{Binding Labels, ElementName=page}"/>
                         <Grid Grid.Column="1">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="2*"/>

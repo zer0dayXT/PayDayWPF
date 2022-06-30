@@ -2,7 +2,9 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using LiveCharts;
+using LiveCharts.Helpers;
 using LiveCharts.Wpf;
 using Microsoft.Extensions.DependencyInjection;
 using PayDayWPF.Persistence;
@@ -17,21 +19,48 @@ namespace PayDayWPF.Pages
         private IRepository _repository;
 
         public SeriesCollection SeriesCollection { get; set; }
+        public AxesCollection AxesYCollection { get; set; }
+        public AxesCollection Labels { get; set; }
 
         public StatisticsPage()
         {
             _repository = ((MainWindow)Application.Current.MainWindow)
                 .ServiceProvider.GetService<IRepository>();
 
+            AxesYCollection = new AxesCollection
+            {
+                new Axis { Title = "PayDay", Foreground = Brushes.Green },
+                new Axis { Title = "Time", Foreground = Brushes.DarkRed },
+            };
+
+            Labels = new AxesCollection
+            {
+                new Axis
+                {
+                    Labels = new string[]
+                    {
+                        "January", "February", "March", "April", "May", "June", "July",
+                        "August", "September", "October", "November", "December"
+                    },
+                    Foreground = Brushes.Black,
+                }
+            };
+
             SeriesCollection = new SeriesCollection
             {
-                new LineSeries
+                new ColumnSeries
                 {
-                    Values = new ChartValues<double> { 3, 5, 7, 3 }
+                    Title = "Money",
+                    Fill = Brushes.Green,
+                    Values = new ChartValues<decimal> { 5, 6, 2, 7 },
+                    ScalesYAt = 0
                 },
                 new ColumnSeries
                 {
-                    Values = new ChartValues<decimal> { 5, 6, 2, 7 }
+                    Title= "Time",
+                    Fill = Brushes.DarkRed,
+                    Values = new ChartValues<decimal> { 3000, 2000, 1000, 9000 },
+                    ScalesYAt = 1
                 }
             };
             InitializeComponent();
