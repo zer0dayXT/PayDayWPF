@@ -15,28 +15,12 @@
             <TabItem Header="Overall Statistics">
                 <Grid Background="#FFE5E5E5">
                     <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="3*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <lvc:CartesianChart Series="{Binding SeriesCollection, ElementName=page}" AxisY="{Binding AxesYCollection, ElementName=page}" AxisX="{Binding Labels, ElementName=page}"/>
-                        <Grid Grid.Column="1">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="2*"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-                        </Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="20"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Label Content="dupa"/>
+                        <lvc:CartesianChart Grid.Row="1" Series="{Binding SeriesCollection, ElementName=page}" AxisY="{Binding AxesYCollection, ElementName=page}" AxisX="{Binding Labels, ElementName=page}"/>
                     </Grid>
                 </Grid>
             </TabItem>

@@ -23,6 +23,7 @@ namespace PayDayWPF.Pages
         public AxesCollection AxesYCollection { get; set; }
         public AxesCollection Labels { get; set; }
         public decimal[] MonthlyIncome { get; set; }
+        public string LabelText { get; set; }
 
         public StatisticsPage()
         {
@@ -41,10 +42,11 @@ namespace PayDayWPF.Pages
                 {
                     Labels = new string[]
                     {
-                        "January", "February", "March", "April", "May", "June", "July",
-                        "August", "September", "October", "November", "December"
+                        "September", "October", "November", "December",
+                        "January", "February", "March", "April", "May", "June", "July", "August"
                     },
                     Foreground = Brushes.Black,
+                    Separator = new LiveCharts.Wpf.Separator { Step = 1 },
                 }
             };
 
@@ -93,9 +95,12 @@ namespace PayDayWPF.Pages
                     .Where(e => e >= lastSeptember);
                 foreach (var meetingsHeld in filteredMeetingsHeld)
                 {
-                    MonthlyIncome[meetingsHeld.Month-1] = package.MeetingProfit;
+                    MonthlyIncome[(meetingsHeld.Month+3)%12] += package.MeetingProfit;
                 }
             }
+            SeriesCollection[0].Values.Clear();
+            SeriesCollection[0].Values.AddRange(MonthlyIncome.Select(e => (object)e));
+            LabelText = "fdasfsadas";
         }
     }
 }

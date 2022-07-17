@@ -5,6 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PayDayWPF"
         mc:Ignorable="d"
-        Title="PayDay" Height="450" Width="800">
+        Title="PayDay" Height="550" Width="950">
     <Frame Name="NavigationFrame"/>
 </Window>
