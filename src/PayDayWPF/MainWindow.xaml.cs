@@ -4,15 +4,13 @@ using PayDayWPF.Persistence;
 using PayDayWPF.Persistence.Implementation;
 using System.Windows;
 using System.Windows.Controls;
+using PayDayWPF.ViewModels;
 
 namespace PayDayWPF
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
-        public ServiceProvider ServiceProvider { get; set; }
+        public static ServiceProvider ServiceProvider { get; set; }
         
         public MainWindow()
         {
@@ -20,6 +18,11 @@ namespace PayDayWPF
             Loaded += OnLoaded;
 
             var serviceCollection = new ServiceCollection();
+            serviceCollection.AddTransient<AddPackageViewModel>();
+            serviceCollection.AddTransient<MainMenuViewModel>();
+            serviceCollection.AddTransient<MarkMeetingViewModel>();
+            serviceCollection.AddTransient<RemainingMeetingsViewModel>();
+            serviceCollection.AddTransient<StatisticsViewModel>();
             serviceCollection.AddSingleton<IRepository, JsonRepository>();
             ServiceProvider = serviceCollection.BuildServiceProvider();
         }
