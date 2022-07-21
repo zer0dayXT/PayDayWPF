@@ -23,6 +23,7 @@ namespace PayDayWPF.Pages
         public AxesCollection AxesYCollection { get; set; }
         public AxesCollection Labels { get; set; }
         public decimal[] MonthlyIncome { get; set; }
+        public decimal[] MonthlyHours { get; set; }
         public string LabelText { get; set; }
 
         public StatisticsPage()
@@ -79,6 +80,8 @@ namespace PayDayWPF.Pages
         private async Task OverallStatistics()
         {
             MonthlyIncome = new decimal[12];
+            MonthlyHours = new decimal[12];
+
             var now = DateTime.Now;
             var lastSeptember = new DateTime(now.Year, 9, 1);
             if (lastSeptember > now)
@@ -96,10 +99,13 @@ namespace PayDayWPF.Pages
                 foreach (var meetingsHeld in filteredMeetingsHeld)
                 {
                     MonthlyIncome[(meetingsHeld.Month+3)%12] += package.MeetingProfit;
+                    MonthlyHours[(meetingsHeld.Month + 3) % 12] += ((decimal)package.Duration) / 60;
                 }
-            }
+            } 
             SeriesCollection[0].Values.Clear();
             SeriesCollection[0].Values.AddRange(MonthlyIncome.Select(e => (object)e));
+            SeriesCollection[1].Values.Clear();
+            SeriesCollection[1].Values.AddRange(MonthlyHours.Select(e => (object)e));
             LabelText = "fdasfsadas";
         }
     }
