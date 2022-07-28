@@ -65,6 +65,7 @@ namespace PayDayWPF.ViewModels
 
         private async Task Initialize()
         {
+            Packages.Clear();
             var packages = await _repository.Load();
             var filteredPackages = packages
                 .Where(e => e.MeetingsHeld.Count < e.MeetingCount)
@@ -76,6 +77,15 @@ namespace PayDayWPF.ViewModels
                 Packages.Add(filteredPackage);
             }
         }
+
+        public ICommand SelectionChangedLeftCommand => new RelayCommand(param =>
+        {
+            var package = param as Package;
+            if (package != null)
+            {
+                HeldMeetings.Add(package);
+            }
+        });
 
         public ICommand SelectionChangedRightCommand => new RelayCommand(param =>
         {
@@ -94,6 +104,7 @@ namespace PayDayWPF.ViewModels
                 await _repository.UpdateMeetings(package.Id, package.MeetingsHeld);
             }
             HeldMeetings.Clear();
+            Initialize();
         });
     }
 }

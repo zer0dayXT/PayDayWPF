@@ -15,7 +15,7 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <ListBox ItemsSource="{Binding Path=Packages}">
+        <ListBox ItemsSource="{Binding Packages}" SelectionChanged="OnSelectionChangedLeft">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Name}"/>

@@ -11,5 +11,6 @@ namespace PayDayWPF.Infrastructure
         public decimal MeetingProfit { get; set; }
         public int MeetingCount { get; set; }
         public List<DateTime> MeetingsHeld { get; set; } = new List<DateTime>();
+        public DateTime? LastMark { get; set; }
     }
 }

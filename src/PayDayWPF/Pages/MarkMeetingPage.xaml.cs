@@ -21,5 +21,14 @@ namespace PayDayWPF.Pages
                 .FirstOrDefault();
             (DataContext as MarkMeetingViewModel)?.SelectionChangedRightCommand.Execute(firstSelectedPackage);
         }
+
+        private void OnSelectionChangedLeft(object sender, SelectionChangedEventArgs e)
+        {
+            var firstSelectedPackage = ((object[])e.AddedItems)
+                .Select(e => (Package)e)
+                .FirstOrDefault();
+            (DataContext as MarkMeetingViewModel)?.SelectionChangedLeftCommand.Execute(firstSelectedPackage);
+            (sender as ListBox).SelectedIndex = -1;
+        }
     }
 }
