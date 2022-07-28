@@ -16,7 +16,7 @@
                 <Grid Background="#FFE5E5E5">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="20"/>
+                            <RowDefinition Height="30"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Label Content="{Binding LabelText}"/>

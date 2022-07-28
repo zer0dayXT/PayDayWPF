@@ -155,7 +155,8 @@ namespace PayDayWPF.ViewModels
             SeriesCollection[0].Values.AddRange(MonthlyIncome.Select(e => (object)e));
             SeriesCollection[1].Values.Clear();
             SeriesCollection[1].Values.AddRange(MonthlyHours.Select(e => (object)e));
-            LabelText = "fdasfsadas";
+            LabelText = $"PayDay: {MonthlyIncome.Sum()} ({(MonthlyIncome.Sum() / MonthlyIncome.Count(e => e != 0)).ToString("n2")})   " +
+                $"Time: {MonthlyHours.Sum()} ({(MonthlyHours.Sum() / MonthlyHours.Count(e => e != 0)).ToString("n2")})";
         }
     }
 }
