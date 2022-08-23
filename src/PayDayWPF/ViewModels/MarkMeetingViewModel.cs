@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using PayDayWPF.Infrastructure;
 using PayDayWPF.Persistence;
@@ -56,7 +57,6 @@ namespace PayDayWPF.ViewModels
             }
         }
 
-
         public MarkMeetingViewModel(IRepository repository)
         {
             _repository = repository;
@@ -76,6 +76,7 @@ namespace PayDayWPF.ViewModels
             {
                 Packages.Add(filteredPackage);
             }
+            SelectedDate = DateTime.Now;
         }
 
         public ICommand SelectionChangedLeftCommand => new RelayCommand(param =>
@@ -100,9 +101,16 @@ namespace PayDayWPF.ViewModels
         {
             foreach (var package in HeldMeetings)
             {
-                package.MeetingsHeld.Add(SelectedDate);
+                if (package.MeetingsHeld.Count >= package.MeetingCount)
+                {
+                    MessageBox.Show($"{package.Name} - remaining meetings: 0", "", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    Initialize();
+                    return;
+                }
+                package.MeetingsHeld.Add(SelectedDate.Date);
                 await _repository.UpdateMeetings(package.Id, package.MeetingsHeld);
             }
+            MessageBox.Show($"Success", "", MessageBoxButton.OK, MessageBoxImage.Information);
             HeldMeetings.Clear();
             Initialize();
         });
