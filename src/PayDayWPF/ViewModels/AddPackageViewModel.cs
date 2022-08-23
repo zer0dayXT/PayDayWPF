@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using PayDayWPF.Infrastructure;
 using PayDayWPF.Persistence;
@@ -20,8 +21,8 @@ namespace PayDayWPF.ViewModels
             }
         }
 
-        private int _duration;
-        public int Duration
+        private int? _duration;
+        public int? Duration
         {
             get => _duration;
             set
@@ -31,8 +32,8 @@ namespace PayDayWPF.ViewModels
             }
         }
 
-        private decimal _meetingProfit;
-        public decimal MeetingProfit
+        private decimal? _meetingProfit;
+        public decimal? MeetingProfit
         {
             get => _meetingProfit;
             set
@@ -42,8 +43,8 @@ namespace PayDayWPF.ViewModels
             }
         }
 
-        private int _meetingCount;
-        public int MeetingCount
+        private int? _meetingCount;
+        public int? MeetingCount
         {
             get => _meetingCount;
             set
@@ -60,13 +61,26 @@ namespace PayDayWPF.ViewModels
 
         public ICommand AddCommand => new RelayCommand(_ =>
         {
-            Task.Run(() => _repository.AddPackage(new Package
+            Task.Run(async () =>
             {
-                Name = Name,
-                Duration = Duration,
-                MeetingProfit = MeetingProfit,
-                MeetingCount = MeetingCount
-            }));
+                if (Name == null || Duration == null || MeetingProfit == null || MeetingCount == null)
+                {
+                    MessageBox.Show("Error", "", MessageBoxButton.OK, MessageBoxImage.Information);
+                    return;
+                }
+                await _repository.AddPackage(new Package
+                {
+                    Name = Name,
+                    Duration = Duration.Value,
+                    MeetingProfit = MeetingProfit.Value,
+                    MeetingCount = MeetingCount.Value
+                });
+                Name = null;
+                Duration = null;
+                MeetingProfit = null;
+                MeetingCount = null;
+                MessageBox.Show("Success", "", MessageBoxButton.OK, MessageBoxImage.Information);
+            });
         });
     }
 }

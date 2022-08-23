@@ -22,6 +22,7 @@ namespace PayDayWPF.Persistence.Implementation
 
         public async Task AddPackage(Package package)
         {
+            package.Id = Guid.NewGuid();
             var packages = await Load();
             packages.Add(package);
             await SaveAll(packages);

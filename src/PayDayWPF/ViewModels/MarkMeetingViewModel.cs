@@ -110,7 +110,7 @@ namespace PayDayWPF.ViewModels
                 package.MeetingsHeld.Add(SelectedDate.Date);
                 await _repository.UpdateMeetings(package.Id, package.MeetingsHeld);
             }
-            MessageBox.Show($"Success", "", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show("Success", "", MessageBoxButton.OK, MessageBoxImage.Information);
             HeldMeetings.Clear();
             Initialize();
         });
