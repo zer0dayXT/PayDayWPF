@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using System.Windows.Media;
 using LiveCharts;
 using LiveCharts.Wpf;
@@ -78,6 +79,31 @@ namespace PayDayWPF.ViewModels
             }
         }
 
+        private string _years;
+        public string Years
+        {
+            get => _years;
+            set
+            {
+                _years = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int Offset { get; set; }
+
+        public ICommand PreviousCommand => new RelayCommand(_ =>
+        {
+            Offset = Offset - 1;
+            OverallStatistics();
+        });
+
+        public ICommand NextCommand => new RelayCommand(_ =>
+        {
+            Offset = Offset + 1;
+            OverallStatistics();
+        });
+
         public StatisticsViewModel(IRepository repository)
         {
             _repository = repository;
@@ -137,6 +163,8 @@ namespace PayDayWPF.ViewModels
             {
                 lastSeptember = lastSeptember.AddYears(-1);
             }
+            lastSeptember = lastSeptember.AddYears(Offset);
+            Years = $"{lastSeptember.Year}/{lastSeptember.Year+1}";
             var packages = await _repository.Load();
             var filteredPackages = packages
                 .Where(e => e.MeetingsHeld.Any(f => f >= lastSeptember))
@@ -144,7 +172,7 @@ namespace PayDayWPF.ViewModels
             foreach (var package in filteredPackages)
             {
                 var filteredMeetingsHeld = package.MeetingsHeld
-                    .Where(e => e >= lastSeptember);
+                    .Where(e => e >= lastSeptember && e < lastSeptember.AddMonths(12));
                 foreach (var meetingsHeld in filteredMeetingsHeld)
                 {
                     MonthlyIncome[(meetingsHeld.Month + 3) % 12] += package.MeetingProfit;
@@ -155,8 +183,15 @@ namespace PayDayWPF.ViewModels
             SeriesCollection[0].Values.AddRange(MonthlyIncome.Select(e => (object)e));
             SeriesCollection[1].Values.Clear();
             SeriesCollection[1].Values.AddRange(MonthlyHours.Select(e => (object)e));
-            LabelText = $"PayDay: {MonthlyIncome.Sum()} ({(MonthlyIncome.Sum() / MonthlyIncome.Count(e => e != 0)).ToString("n2")})   " +
-                $"Time: {MonthlyHours.Sum()} ({(MonthlyHours.Sum() / MonthlyHours.Count(e => e != 0)).ToString("n2")})";
+            if (MonthlyIncome.Count(e => e != 0) == 0)
+            {
+                LabelText = "No Data";
+            }
+            else
+            {
+                LabelText = $"PayDay: {MonthlyIncome.Sum()} ({(MonthlyIncome.Sum() / MonthlyIncome.Count(e => e != 0)).ToString("n2")})   " +
+                    $"Time: {MonthlyHours.Sum()} ({(MonthlyHours.Sum() / MonthlyHours.Count(e => e != 0)).ToString("n2")})";
+            }
         }
     }
 }
