@@ -24,6 +24,17 @@ namespace PayDayWPF.ViewModels
             }
         }
 
+        private SeriesCollection _seriesCollection2;
+        public SeriesCollection SeriesCollection2
+        {
+            get => _seriesCollection2;
+            set
+            {
+                _seriesCollection2 = value;
+                OnPropertyChanged();
+            }
+        }
+
         private AxesCollection _axesYCollection;
         public AxesCollection AxesYCollection
         {
@@ -115,8 +126,8 @@ namespace PayDayWPF.ViewModels
         {
             AxesYCollection = new AxesCollection
             {
-                new Axis { Title = "PayDay", Foreground = Brushes.Green },
-                new Axis { Title = "Time", Foreground = Brushes.DarkRed },
+                new Axis { MinValue = 0, Title = "PayDay", Foreground = Brushes.Green },
+                new Axis { MinValue = 0, Title = "Time", Foreground = Brushes.DarkRed },
             };
 
             Labels = new AxesCollection
@@ -139,16 +150,30 @@ namespace PayDayWPF.ViewModels
                 {
                     Title = "Money",
                     Fill = Brushes.Green,
-                    Values = new ChartValues<decimal> { 5, 6, 2, 7 },
-                    ScalesYAt = 0
+                    Values = new ChartValues<decimal>(),
+                    ScalesYAt = 0,
                 },
                 new ColumnSeries
                 {
                     Title= "Time",
                     Fill = Brushes.DarkRed,
-                    Values = new ChartValues<decimal> { 3000, 2000, 1000, 9000 },
+                    Values = new ChartValues<decimal>(),
                     ScalesYAt = 1
                 }
+            };
+
+            SeriesCollection2 = new SeriesCollection
+            {
+                new StackedColumnSeries
+                {
+                    Values = new ChartValues<decimal>(),
+                    DataLabels = true,
+                },
+                new StackedColumnSeries
+                {
+                    Values = new ChartValues<decimal>(),
+                    DataLabels = true,
+                },
             };
         }
 

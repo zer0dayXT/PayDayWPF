@@ -35,8 +35,17 @@
                     </Grid>
                 </Grid>
             </TabItem>
-            <TabItem Header="TabItem">
-                <Grid Background="#FFE5E5E5"/>
+            <TabItem Header="Potential Income">
+                <Grid Background="#FFE5E5E5">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Label Content="{Binding LabelText}"/>
+                        <lvc:CartesianChart Grid.Row="1" Series="{Binding SeriesCollection2}"/>
+                    </Grid>
+                </Grid>
             </TabItem>
         </TabControl>
     </Grid>

@@ -54,9 +54,23 @@ namespace PayDayWPF.ViewModels
         private async Task Initialize()
         {
             var packages = await _repository.Load();
+            packages = MergePackages(packages);
             HandleLeftList(packages);
             HandleMiddleList(packages);
             HandleRightList(packages);
+        }
+
+        private List<Package> MergePackages(List<Package> packages)
+        {
+            var filteredPackages = packages
+                .GroupBy(e => e.Name)
+                .Select(e => new Package
+                {
+                    Name = e.Key,
+                    MeetingCount = e.Sum(f => f.MeetingCount),
+                    MeetingsHeld = e.SelectMany(f => f.MeetingsHeld).ToList(),
+                }).ToList();
+            return filteredPackages;
         }
 
         private void HandleLeftList(List<Package> packages)
@@ -108,6 +122,7 @@ namespace PayDayWPF.ViewModels
         {
             var filteredPackages = packages
                 .Where(e => e.MeetingsHeld.Count == e.MeetingCount)
+                .Where(e => e.MeetingsHeld.Last() < (DateTime.Now - TimeSpan.FromDays(10)))
                 .DistinctBy(e => e.Name)
                 .OrderBy(e => e.Name);
 
