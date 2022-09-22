@@ -43,7 +43,7 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Label Content="{Binding LabelText}"/>
-                        <lvc:CartesianChart Grid.Row="1" Series="{Binding SeriesCollection2}"/>
+                        <lvc:CartesianChart Grid.Row="1" Series="{Binding SeriesCollection2}" AxisX="{Binding Labels2}"/>
                     </Grid>
                 </Grid>
             </TabItem>

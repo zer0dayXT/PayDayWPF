@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media;
 using LiveCharts;
 using LiveCharts.Wpf;
+using PayDayWPF.Infrastructure;
 using PayDayWPF.Persistence;
 
 namespace PayDayWPF.ViewModels
@@ -53,6 +55,17 @@ namespace PayDayWPF.ViewModels
             set
             {
                 _labels = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private AxesCollection _labels2;
+        public AxesCollection Labels2
+        {
+            get => _labels2;
+            set
+            {
+                _labels2 = value;
                 OnPropertyChanged();
             }
         }
@@ -120,6 +133,7 @@ namespace PayDayWPF.ViewModels
             _repository = repository;
             Initialize();
             OverallStatistics();
+            PotentialIncome();
         }
 
         private void Initialize()
@@ -162,16 +176,27 @@ namespace PayDayWPF.ViewModels
                 }
             };
 
+            Labels2 = new AxesCollection
+            {
+                new Axis
+                {
+                    Labels = new List<string>(),
+                    LabelsRotation = 45,
+                    Foreground = Brushes.Black,
+                    Separator = new LiveCharts.Wpf.Separator { Step = 1 },
+                }
+            };
+
             SeriesCollection2 = new SeriesCollection
             {
                 new StackedColumnSeries
                 {
-                    Values = new ChartValues<decimal>(),
+                    Values = new ChartValues<int>(),
                     DataLabels = true,
                 },
                 new StackedColumnSeries
                 {
-                    Values = new ChartValues<decimal>(),
+                    Values = new ChartValues<int>(),
                     DataLabels = true,
                 },
             };
@@ -217,6 +242,34 @@ namespace PayDayWPF.ViewModels
                 LabelText = $"PayDay: {MonthlyIncome.Sum()} ({(MonthlyIncome.Sum() / MonthlyIncome.Count(e => e != 0)).ToString("n2")})   " +
                     $"Time: {MonthlyHours.Sum()} ({(MonthlyHours.Sum() / MonthlyHours.Count(e => e != 0)).ToString("n2")})";
             }
+        }
+
+        private List<Package> MergePackages(List<Package> packages)
+        {
+            var filteredPackages = packages
+                .GroupBy(e => e.Name)
+                .Select(e => new Package
+                {
+                    Name = e.Key,
+                    MeetingCount = e.Sum(f => f.MeetingCount),
+                    MeetingsHeld = e.SelectMany(f => f.MeetingsHeld).ToList(),
+                }).ToList();
+            return filteredPackages;
+        }
+
+        private async Task PotentialIncome()
+        {
+            var packages = await _repository.Load();
+            packages = packages
+                .Where(e => e.MeetingsHeld.Count != e.MeetingCount)
+                .ToList();
+            var filteredPackages = MergePackages(packages);
+            filteredPackages = filteredPackages
+                .Where(e => e.MeetingsHeld.Count != e.MeetingCount)
+                .ToList();
+            ((List<string>)Labels2[0].Labels).AddRange(filteredPackages.Select(e => e.Name));
+            SeriesCollection2[1].Values.AddRange(filteredPackages.Select(e => (object)(e.MeetingCount - e.MeetingsHeld.Count)));
+            SeriesCollection2[0].Values.AddRange(filteredPackages.Select(e => (object)e.MeetingsHeld.Count));
         }
     }
 }
