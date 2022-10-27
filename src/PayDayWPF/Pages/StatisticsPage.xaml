@@ -47,6 +47,18 @@
                     </Grid>
                 </Grid>
             </TabItem>
+            <TabItem Header="Meetings Balance">
+                <Grid Background="#FFE5E5E5">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Label Content="{Binding LabelText}"/>
+                        <lvc:CartesianChart Grid.Row="1" Series="{Binding SeriesCollection3}" AxisX="{Binding Labels3}"/>
+                    </Grid>
+                </Grid>
+            </TabItem>
         </TabControl>
     </Grid>
 </Page>

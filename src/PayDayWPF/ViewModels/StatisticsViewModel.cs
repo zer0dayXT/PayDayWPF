@@ -37,6 +37,17 @@ namespace PayDayWPF.ViewModels
             }
         }
 
+        private SeriesCollection _seriesCollection3;
+        public SeriesCollection SeriesCollection3
+        {
+            get => _seriesCollection3;
+            set
+            {
+                _seriesCollection3 = value;
+                OnPropertyChanged();
+            }
+        }
+
         private AxesCollection _axesYCollection;
         public AxesCollection AxesYCollection
         {
@@ -66,6 +77,17 @@ namespace PayDayWPF.ViewModels
             set
             {
                 _labels2 = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private AxesCollection _labels3;
+        public AxesCollection Labels3
+        {
+            get => _labels3;
+            set
+            {
+                _labels3 = value;
                 OnPropertyChanged();
             }
         }
@@ -134,6 +156,7 @@ namespace PayDayWPF.ViewModels
             Initialize();
             OverallStatistics();
             PotentialIncome();
+            MeetingsBalance();
         }
 
         private void Initialize()
@@ -188,6 +211,31 @@ namespace PayDayWPF.ViewModels
             };
 
             SeriesCollection2 = new SeriesCollection
+            {
+                new StackedColumnSeries
+                {
+                    Values = new ChartValues<decimal>(),
+                    DataLabels = true,
+                },
+                new StackedColumnSeries
+                {
+                    Values = new ChartValues<decimal>(),
+                    DataLabels = true,
+                },
+            };
+
+            Labels3 = new AxesCollection
+            {
+                new Axis
+                {
+                    Labels = new List<string>(),
+                    LabelsRotation = 45,
+                    Foreground = Brushes.Black,
+                    Separator = new LiveCharts.Wpf.Separator { Step = 1 },
+                }
+            };
+
+            SeriesCollection3 = new SeriesCollection
             {
                 new StackedColumnSeries
                 {
@@ -263,13 +311,45 @@ namespace PayDayWPF.ViewModels
             packages = packages
                 .Where(e => e.MeetingsHeld.Count != e.MeetingCount)
                 .ToList();
+            var groupedPackages = packages
+                .GroupBy(e => e.Name)
+                .ToList();
+            ((List<string>)Labels2[0].Labels).AddRange(groupedPackages.Select(e => e.Key));
+            SeriesCollection2[0].Values.AddRange(groupedPackages.Select(e =>
+            {
+                var activePackage = e.Where(f => f.MeetingsHeld.Count > 0).FirstOrDefault();
+                if (activePackage == null)
+                {
+                    activePackage = e.FirstOrDefault();
+                }
+                var activePackageIncome = activePackage.MeetingsHeld.Count * activePackage.MeetingProfit;
+                return (object)activePackageIncome;
+            }));
+            SeriesCollection2[1].Values.AddRange(groupedPackages.Select(e =>
+            {
+                var totalIncome = 0m;
+                foreach (var package in e)
+                {
+                    var packageIncome = (package.MeetingCount - package.MeetingsHeld.Count) * package.MeetingProfit;
+                    totalIncome = totalIncome + packageIncome;
+                }
+                return (object)totalIncome;
+            }));
+        }
+
+        private async Task MeetingsBalance()
+        {
+            var packages = await _repository.Load();
+            packages = packages
+                .Where(e => e.MeetingsHeld.Count != e.MeetingCount)
+                .ToList();
             var filteredPackages = MergePackages(packages);
             filteredPackages = filteredPackages
                 .Where(e => e.MeetingsHeld.Count != e.MeetingCount)
                 .ToList();
-            ((List<string>)Labels2[0].Labels).AddRange(filteredPackages.Select(e => e.Name));
-            SeriesCollection2[1].Values.AddRange(filteredPackages.Select(e => (object)(e.MeetingCount - e.MeetingsHeld.Count)));
-            SeriesCollection2[0].Values.AddRange(filteredPackages.Select(e => (object)e.MeetingsHeld.Count));
+            ((List<string>)Labels3[0].Labels).AddRange(filteredPackages.Select(e => e.Name));
+            SeriesCollection3[1].Values.AddRange(filteredPackages.Select(e => (object)(e.MeetingCount - e.MeetingsHeld.Count)));
+            SeriesCollection3[0].Values.AddRange(filteredPackages.Select(e => (object)e.MeetingsHeld.Count));
         }
     }
 }
