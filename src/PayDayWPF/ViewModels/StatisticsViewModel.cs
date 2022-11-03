@@ -16,7 +16,7 @@ namespace PayDayWPF.ViewModels
         private readonly IRepository _repository;
 
         private SeriesCollection _seriesCollection;
-        public SeriesCollection SeriesCollection
+        public SeriesCollection SeriesCollection1
         {
             get => _seriesCollection;
             set
@@ -48,24 +48,35 @@ namespace PayDayWPF.ViewModels
             }
         }
 
-        private AxesCollection _axesYCollection;
-        public AxesCollection AxesYCollection
+        private AxesCollection _axesYCollection1;
+        public AxesCollection AxesYCollection1
         {
-            get => _axesYCollection;
+            get => _axesYCollection1;
             set
             {
-                _axesYCollection = value;
+                _axesYCollection1 = value;
                 OnPropertyChanged();
             }
         }
 
-        private AxesCollection _labels;
-        public AxesCollection Labels
+        private AxesCollection _labels1;
+        public AxesCollection Labels1
         {
-            get => _labels;
+            get => _labels1;
             set
             {
-                _labels = value;
+                _labels1 = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private AxesCollection _axesYCollection2;
+        public AxesCollection AxesYCollection2
+        {
+            get => _axesYCollection2;
+            set
+            {
+                _axesYCollection2 = value;
                 OnPropertyChanged();
             }
         }
@@ -77,6 +88,17 @@ namespace PayDayWPF.ViewModels
             set
             {
                 _labels2 = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private AxesCollection _axesYCollection3;
+        public AxesCollection AxesYCollection3
+        {
+            get => _axesYCollection3;
+            set
+            {
+                _axesYCollection3 = value;
                 OnPropertyChanged();
             }
         }
@@ -114,13 +136,35 @@ namespace PayDayWPF.ViewModels
             }
         }
 
-        private string _labelText;
-        public string LabelText
+        private string _labelText1;
+        public string LabelText1
         {
-            get => _labelText;
+            get => _labelText1;
             set
             {
-                _labelText = value;
+                _labelText1 = value;
+                OnPropertyChanged();
+            }
+        }
+        private string _labelText2;
+
+        public string LabelText2
+        {
+            get => _labelText2;
+            set
+            {
+                _labelText2 = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _labelText3;
+        public string LabelText3
+        {
+            get => _labelText3;
+            set
+            {
+                _labelText1 = value;
                 OnPropertyChanged();
             }
         }
@@ -161,13 +205,13 @@ namespace PayDayWPF.ViewModels
 
         private void Initialize()
         {
-            AxesYCollection = new AxesCollection
+            AxesYCollection1 = new AxesCollection
             {
                 new Axis { MinValue = 0, Title = "PayDay", Foreground = Brushes.Green },
                 new Axis { MinValue = 0, Title = "Time", Foreground = Brushes.DarkRed },
             };
 
-            Labels = new AxesCollection
+            Labels1 = new AxesCollection
             {
                 new Axis
                 {
@@ -181,7 +225,7 @@ namespace PayDayWPF.ViewModels
                 }
             };
 
-            SeriesCollection = new SeriesCollection
+            SeriesCollection1 = new SeriesCollection
             {
                 new ColumnSeries
                 {
@@ -199,6 +243,11 @@ namespace PayDayWPF.ViewModels
                 }
             };
 
+            AxesYCollection2 = new AxesCollection
+            {
+                new Axis { MinValue = 0, Title = "Income", Foreground = Brushes.Green },
+            };
+
             Labels2 = new AxesCollection
             {
                 new Axis
@@ -214,14 +263,23 @@ namespace PayDayWPF.ViewModels
             {
                 new StackedColumnSeries
                 {
+                    Title = "Income",
+                    Fill = Brushes.Green,
                     Values = new ChartValues<decimal>(),
                     DataLabels = true,
                 },
                 new StackedColumnSeries
                 {
+                    Title = "Potential Income",
+                    Fill = Brushes.DarkRed,
                     Values = new ChartValues<decimal>(),
                     DataLabels = true,
                 },
+            };
+
+            AxesYCollection3 = new AxesCollection
+            {
+                new Axis { MinValue = 0, Title = "Count", Foreground = Brushes.Green },
             };
 
             Labels3 = new AxesCollection
@@ -239,11 +297,15 @@ namespace PayDayWPF.ViewModels
             {
                 new StackedColumnSeries
                 {
+                    Title = "Held",
+                    Fill = Brushes.Green,
                     Values = new ChartValues<int>(),
                     DataLabels = true,
                 },
                 new StackedColumnSeries
                 {
+                    Title = "Remaining",
+                    Fill = Brushes.DarkRed,
                     Values = new ChartValues<int>(),
                     DataLabels = true,
                 },
@@ -277,17 +339,17 @@ namespace PayDayWPF.ViewModels
                     MonthlyHours[(meetingsHeld.Month + 3) % 12] += ((decimal)package.Duration) / 60;
                 }
             }
-            SeriesCollection[0].Values.Clear();
-            SeriesCollection[0].Values.AddRange(MonthlyIncome.Select(e => (object)e));
-            SeriesCollection[1].Values.Clear();
-            SeriesCollection[1].Values.AddRange(MonthlyHours.Select(e => (object)e));
+            SeriesCollection1[0].Values.Clear();
+            SeriesCollection1[0].Values.AddRange(MonthlyIncome.Select(e => (object)e));
+            SeriesCollection1[1].Values.Clear();
+            SeriesCollection1[1].Values.AddRange(MonthlyHours.Select(e => (object)e));
             if (MonthlyIncome.Count(e => e != 0) == 0)
             {
-                LabelText = "No Data";
+                LabelText1 = "No Data";
             }
             else
             {
-                LabelText = $"PayDay: {MonthlyIncome.Sum()} ({(MonthlyIncome.Sum() / MonthlyIncome.Count(e => e != 0)).ToString("n2")})   " +
+                LabelText1 = $"PayDay: {MonthlyIncome.Sum()} ({(MonthlyIncome.Sum() / MonthlyIncome.Count(e => e != 0)).ToString("n2")})   " +
                     $"Time: {MonthlyHours.Sum()} ({(MonthlyHours.Sum() / MonthlyHours.Count(e => e != 0)).ToString("n2")})";
             }
         }
@@ -335,6 +397,15 @@ namespace PayDayWPF.ViewModels
                 }
                 return (object)totalIncome;
             }));
+            if (MonthlyIncome.Count(e => e != 0) == 0)
+            {
+                LabelText1 = "No Data";
+            }
+            else
+            {
+                LabelText2 = $"Income: {((ChartValues<decimal>)SeriesCollection2[0].Values).Sum()}  " +
+                    $"Potential Income: {((ChartValues<decimal>)SeriesCollection2[1].Values).Sum()}";
+            }
         }
 
         private async Task MeetingsBalance()

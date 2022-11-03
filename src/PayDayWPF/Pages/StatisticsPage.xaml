@@ -20,8 +20,8 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="30"/>
                         </Grid.RowDefinitions>
-                        <Label Content="{Binding LabelText}"/>
-                        <lvc:CartesianChart Grid.Row="1" Series="{Binding SeriesCollection}" AxisY="{Binding AxesYCollection}" AxisX="{Binding Labels}"/>
+                        <Label Content="{Binding LabelText1}"/>
+                        <lvc:CartesianChart Grid.Row="1" Series="{Binding SeriesCollection1}" AxisY="{Binding AxesYCollection1}" AxisX="{Binding Labels1}"/>
                         <Grid Grid.Row="2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="2*"/>
@@ -42,8 +42,8 @@
                             <RowDefinition Height="30"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <Label Content="{Binding LabelText}"/>
-                        <lvc:CartesianChart Grid.Row="1" Series="{Binding SeriesCollection2}" AxisX="{Binding Labels2}"/>
+                        <Label Content="{Binding LabelText2}"/>
+                        <lvc:CartesianChart Grid.Row="1" Series="{Binding SeriesCollection2}" AxisY="{Binding AxesYCollection2}" AxisX="{Binding Labels2}"/>
                     </Grid>
                 </Grid>
             </TabItem>
@@ -54,8 +54,8 @@
                             <RowDefinition Height="30"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <Label Content="{Binding LabelText}"/>
-                        <lvc:CartesianChart Grid.Row="1" Series="{Binding SeriesCollection3}" AxisX="{Binding Labels3}"/>
+                        <Label Content="{Binding LabelText3}"/>
+                        <lvc:CartesianChart Grid.Row="1" Series="{Binding SeriesCollection3}" AxisY="{Binding AxesYCollection3}" AxisX="{Binding Labels3}"/>
                     </Grid>
                 </Grid>
             </TabItem>
