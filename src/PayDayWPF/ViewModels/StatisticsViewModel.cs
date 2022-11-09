@@ -164,7 +164,7 @@ namespace PayDayWPF.ViewModels
             get => _labelText3;
             set
             {
-                _labelText1 = value;
+                _labelText3 = value;
                 OnPropertyChanged();
             }
         }
@@ -399,7 +399,7 @@ namespace PayDayWPF.ViewModels
             }));
             if (MonthlyIncome.Count(e => e != 0) == 0)
             {
-                LabelText1 = "No Data";
+                LabelText2 = "No Data";
             }
             else
             {
@@ -421,6 +421,15 @@ namespace PayDayWPF.ViewModels
             ((List<string>)Labels3[0].Labels).AddRange(filteredPackages.Select(e => e.Name));
             SeriesCollection3[1].Values.AddRange(filteredPackages.Select(e => (object)(e.MeetingCount - e.MeetingsHeld.Count)));
             SeriesCollection3[0].Values.AddRange(filteredPackages.Select(e => (object)e.MeetingsHeld.Count));
+            if (MonthlyIncome.Count(e => e != 0) == 0)
+            {
+                LabelText3 = "No Data";
+            }
+            else
+            {
+                LabelText3 = $":Held {((ChartValues<int>)SeriesCollection3[0].Values).Sum()}  " +
+                    $"Remaining: {((ChartValues<int>)SeriesCollection3[1].Values).Sum()}";
+            }
         }
     }
 }

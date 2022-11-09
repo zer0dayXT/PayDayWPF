@@ -3,6 +3,7 @@ using PayDayWPF.Infrastructure;
 using System.Linq;
 using System.Windows.Controls;
 using PayDayWPF.ViewModels;
+using System.Windows.Input;
 
 namespace PayDayWPF.Pages
 {
@@ -29,6 +30,10 @@ namespace PayDayWPF.Pages
                 .FirstOrDefault();
             (DataContext as MarkMeetingViewModel)?.SelectionChangedLeftCommand.Execute(firstSelectedPackage);
             (sender as ListBox).SelectedIndex = -1;
+        }
+
+        private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
         }
     }
 }

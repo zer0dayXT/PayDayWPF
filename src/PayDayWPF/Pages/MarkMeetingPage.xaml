@@ -18,7 +18,11 @@
         <ListBox ItemsSource="{Binding Packages}" SelectionChanged="OnSelectionChangedLeft">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Name}"/>
+                    <TextBlock
+                        Width="{Binding (FrameworkElement.ActualWidth), RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}"
+                        PreviewMouseLeftButtonDown="OnMouseLeftButtonDown"
+                        Text="{Binding Name}"
+                        Margin="0,0,0,0"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
