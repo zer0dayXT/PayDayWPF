@@ -82,24 +82,6 @@ namespace PayDayWPF.ViewModels
                 .FirstOrDefault();
         }
 
-        //public ICommand SelectionChangedLeftCommand => new RelayCommand(param =>
-        //{
-        //    var package = param as Package;
-        //    if (package != null)
-        //    {
-        //        HeldMeetings.Add(package);
-        //    }
-        //});
-
-        //public ICommand SelectionChangedRightCommand => new RelayCommand(param =>
-        //{
-        //    var package = param as Package;
-        //    if (package != null)
-        //    {
-        //        HeldMeetings.Remove(package);
-        //    }
-        //});
-
         public ICommand AddHeldMeetingCommand => new RelayCommand(param =>
         {
             var package = param as Package;
@@ -115,6 +97,24 @@ namespace PayDayWPF.ViewModels
             if (package != null)
             {
                 UnheldMeetings.Add(package);
+            }
+        });
+
+        public ICommand RemoveHeldMeetingCommand => new RelayCommand(param =>
+        {
+            var package = param as Package;
+            if (package != null)
+            {
+                HeldMeetings.Remove(package);
+            }
+        });
+
+        public ICommand RemoveUnheldMeetingCommand => new RelayCommand(param =>
+        {
+            var package = param as Package;
+            if (package != null)
+            {
+                UnheldMeetings.Remove(package);
             }
         });
 

@@ -15,15 +15,27 @@ namespace PayDayWPF.Pages
             DataContext = MainWindow.ServiceProvider.GetService<MarkMeetingViewModel>();
         }
 
-        private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void OnPackagesMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             (DataContext as MarkMeetingViewModel)?.AddHeldMeetingCommand.Execute(
                 (sender as TextBlock).DataContext);
         }
 
-        private void OnMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        private void OnPackagesMouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             (DataContext as MarkMeetingViewModel)?.AddUnheldMeetingCommand.Execute(
+                (sender as TextBlock).DataContext);
+        }
+
+        private void OnHeldMeetingsMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            (DataContext as MarkMeetingViewModel)?.RemoveHeldMeetingCommand.Execute(
+                (sender as TextBlock).DataContext);
+        }
+
+        private void OnUnheldMeetingsMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            (DataContext as MarkMeetingViewModel)?.RemoveUnheldMeetingCommand.Execute(
                 (sender as TextBlock).DataContext);
         }
     }

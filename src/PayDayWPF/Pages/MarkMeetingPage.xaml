@@ -20,7 +20,7 @@
                 <DataTemplate>
                     <TextBlock
                         Width="{Binding (FrameworkElement.ActualWidth), RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}"
-                        PreviewMouseLeftButtonDown="OnMouseLeftButtonDown" PreviewMouseRightButtonDown="OnMouseRightButtonDown"
+                        PreviewMouseLeftButtonDown="OnPackagesMouseLeftButtonDown" PreviewMouseRightButtonDown="OnPackagesMouseRightButtonDown"
                         Text="{Binding Name}"
                         Margin="0,0,0,0"/>
                 </DataTemplate>
@@ -34,14 +34,22 @@
             <ListBox ItemsSource="{Binding HeldMeetings}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Name}"/>
+                        <TextBlock
+                            Width="{Binding (FrameworkElement.ActualWidth), RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}"
+                            PreviewMouseLeftButtonDown="OnHeldMeetingsMouseLeftButtonDown"
+                            Text="{Binding Name}"
+                            Margin="0,0,0,0"/>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
             <ListBox Grid.Row="1" ItemsSource="{Binding UnheldMeetings}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Name}"/>
+                        <TextBlock
+                            Width="{Binding (FrameworkElement.ActualWidth), RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}"
+                            PreviewMouseLeftButtonDown="OnUnheldMeetingsMouseLeftButtonDown"
+                            Text="{Binding Name}"
+                            Margin="0,0,0,0"/>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
