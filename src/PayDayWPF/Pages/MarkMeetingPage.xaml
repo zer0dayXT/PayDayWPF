@@ -15,12 +15,12 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <ListBox ItemsSource="{Binding Packages}" SelectionChanged="OnSelectionChangedLeft">
+        <ListBox ItemsSource="{Binding Packages}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock
                         Width="{Binding (FrameworkElement.ActualWidth), RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}"
-                        PreviewMouseLeftButtonDown="OnMouseLeftButtonDown"
+                        PreviewMouseLeftButtonDown="OnMouseLeftButtonDown" PreviewMouseRightButtonDown="OnMouseRightButtonDown"
                         Text="{Binding Name}"
                         Margin="0,0,0,0"/>
                 </DataTemplate>
@@ -31,14 +31,14 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <ListBox ItemsSource="{Binding HeldMeetings}" SelectionChanged="OnSelectionChangedRight">
+            <ListBox ItemsSource="{Binding HeldMeetings}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Name}"/>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <ListBox Grid.Row="1" ItemsSource="{Binding UnheldMeetings}" SelectionChanged="OnSelectionChangedRight">
+            <ListBox Grid.Row="1" ItemsSource="{Binding UnheldMeetings}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Name}"/>

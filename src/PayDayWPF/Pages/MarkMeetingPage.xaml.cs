@@ -15,25 +15,16 @@ namespace PayDayWPF.Pages
             DataContext = MainWindow.ServiceProvider.GetService<MarkMeetingViewModel>();
         }
 
-        private void OnSelectionChangedRight(object sender, SelectionChangedEventArgs e)
-        {
-            var firstSelectedPackage = ((object[])e.AddedItems)
-                .Select(e => (Package)e)
-                .FirstOrDefault();
-            (DataContext as MarkMeetingViewModel)?.SelectionChangedRightCommand.Execute(firstSelectedPackage);
-        }
-
-        private void OnSelectionChangedLeft(object sender, SelectionChangedEventArgs e)
-        {
-            var firstSelectedPackage = ((object[])e.AddedItems)
-                .Select(e => (Package)e)
-                .FirstOrDefault();
-            (DataContext as MarkMeetingViewModel)?.SelectionChangedLeftCommand.Execute(firstSelectedPackage);
-            (sender as ListBox).SelectedIndex = -1;
-        }
-
         private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            (DataContext as MarkMeetingViewModel)?.AddHeldMeetingCommand.Execute(
+                (sender as TextBlock).DataContext);
+        }
+
+        private void OnMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            (DataContext as MarkMeetingViewModel)?.AddUnheldMeetingCommand.Execute(
+                (sender as TextBlock).DataContext);
         }
     }
 }

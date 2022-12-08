@@ -76,10 +76,31 @@ namespace PayDayWPF.ViewModels
             {
                 Packages.Add(filteredPackage);
             }
-            SelectedDate = DateTime.Now;
+            SelectedDate = packages
+                .SelectMany(e => e.MeetingsHeld)
+                .OrderByDescending(e => e)
+                .FirstOrDefault();
         }
 
-        public ICommand SelectionChangedLeftCommand => new RelayCommand(param =>
+        //public ICommand SelectionChangedLeftCommand => new RelayCommand(param =>
+        //{
+        //    var package = param as Package;
+        //    if (package != null)
+        //    {
+        //        HeldMeetings.Add(package);
+        //    }
+        //});
+
+        //public ICommand SelectionChangedRightCommand => new RelayCommand(param =>
+        //{
+        //    var package = param as Package;
+        //    if (package != null)
+        //    {
+        //        HeldMeetings.Remove(package);
+        //    }
+        //});
+
+        public ICommand AddHeldMeetingCommand => new RelayCommand(param =>
         {
             var package = param as Package;
             if (package != null)
@@ -88,12 +109,12 @@ namespace PayDayWPF.ViewModels
             }
         });
 
-        public ICommand SelectionChangedRightCommand => new RelayCommand(param =>
+        public ICommand AddUnheldMeetingCommand => new RelayCommand(param =>
         {
             var package = param as Package;
             if (package != null)
             {
-                HeldMeetings.Remove(package);
+                UnheldMeetings.Add(package);
             }
         });
 
