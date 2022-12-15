@@ -48,6 +48,28 @@ namespace PayDayWPF.ViewModels
             }
         }
 
+        private SeriesCollection _seriesCollection4;
+        public SeriesCollection SeriesCollection4
+        {
+            get => _seriesCollection4;
+            set
+            {
+                _seriesCollection4 = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private SeriesCollection _seriesCollection5;
+        public SeriesCollection SeriesCollection5
+        {
+            get => _seriesCollection5;
+            set
+            {
+                _seriesCollection5 = value;
+                OnPropertyChanged();
+            }
+        }
+
         private AxesCollection _axesYCollection1;
         public AxesCollection AxesYCollection1
         {
@@ -114,6 +136,50 @@ namespace PayDayWPF.ViewModels
             }
         }
 
+        private AxesCollection _axesYCollection4;
+        public AxesCollection AxesYCollection4
+        {
+            get => _axesYCollection4;
+            set
+            {
+                _axesYCollection4 = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private AxesCollection _labels4;
+        public AxesCollection Labels4
+        {
+            get => _labels4;
+            set
+            {
+                _labels4 = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private AxesCollection _axesYCollection5;
+        public AxesCollection AxesYCollection5
+        {
+            get => _axesYCollection5;
+            set
+            {
+                _axesYCollection5 = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private AxesCollection _labels5;
+        public AxesCollection Labels5
+        {
+            get => _labels5;
+            set
+            {
+                _labels5 = value;
+                OnPropertyChanged();
+            }
+        }
+
         private decimal[] _monthlyIncome;
         public decimal[] MonthlyIncome
         {
@@ -169,6 +235,28 @@ namespace PayDayWPF.ViewModels
             }
         }
 
+        private string _labelText4;
+        public string LabelText4
+        {
+            get => _labelText4;
+            set
+            {
+                _labelText4 = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _labelText5;
+        public string LabelText5
+        {
+            get => _labelText5;
+            set
+            {
+                _labelText5 = value;
+                OnPropertyChanged();
+            }
+        }
+
         private string _years;
         public string Years
         {
@@ -201,6 +289,8 @@ namespace PayDayWPF.ViewModels
             OverallStatistics();
             PotentialIncome();
             MeetingsBalance();
+            LossOfProfit();
+            LossOfProfitTime();
         }
 
         private void Initialize()
@@ -307,6 +397,60 @@ namespace PayDayWPF.ViewModels
                     Title = "Remaining",
                     Fill = Brushes.DarkRed,
                     Values = new ChartValues<int>(),
+                    DataLabels = true,
+                },
+            };
+
+            AxesYCollection4 = new AxesCollection
+            {
+                new Axis { MinValue = 0, Title = "Lost Profit", Foreground = Brushes.Black },
+            };
+
+            Labels4 = new AxesCollection
+            {
+                new Axis
+                {
+                    Labels = new List<string>(),
+                    LabelsRotation = 45,
+                    Foreground = Brushes.Black,
+                    Separator = new LiveCharts.Wpf.Separator { Step = 1 },
+                }
+            };
+
+            SeriesCollection4 = new SeriesCollection
+            {
+                new ColumnSeries
+                {
+                    Title = "Lost Profit",
+                    Fill = Brushes.Black,
+                    Values = new ChartValues<decimal>(),
+                    DataLabels = true,
+                },
+            };
+
+            AxesYCollection5 = new AxesCollection
+            {
+                new Axis { MinValue = 0, Title = "Lost Profit (Time)", Foreground = Brushes.Black },
+            };
+
+            Labels5 = new AxesCollection
+            {
+                new Axis
+                {
+                    Labels = new List<string>(),
+                    LabelsRotation = 45,
+                    Foreground = Brushes.Black,
+                    Separator = new LiveCharts.Wpf.Separator { Step = 1 },
+                }
+            };
+
+            SeriesCollection5 = new SeriesCollection
+            {
+                new ColumnSeries
+                {
+                    Title = "Lost Profit (Time)",
+                    Fill = Brushes.Black,
+                    Values = new ChartValues<decimal>(),
                     DataLabels = true,
                 },
             };
@@ -430,6 +574,50 @@ namespace PayDayWPF.ViewModels
                 LabelText3 = $":Held {((ChartValues<int>)SeriesCollection3[0].Values).Sum()}  " +
                     $"Remaining: {((ChartValues<int>)SeriesCollection3[1].Values).Sum()}";
             }
+        }
+
+        private async Task LossOfProfit()
+        {
+            var packages = await _repository.Load();
+            packages = packages
+                .Where(e => e.MeetingsHeld.Count != e.MeetingCount)
+                .ToList();
+            var groupedPackages = packages
+                .GroupBy(e => e.Name)
+                .ToList();
+            ((List<string>)Labels4[0].Labels).AddRange(groupedPackages.Select(e => e.Key));
+            SeriesCollection4[0].Values.AddRange(groupedPackages.Select(e =>
+            {
+                var lossOfProfit = 0m;
+                foreach (var package in e)
+                {
+                    lossOfProfit += package.MeetingsUnheld.Count * package.MeetingProfit;
+                }
+                return (object)lossOfProfit;
+            }));
+            LabelText4 = $"Loss of Profit: {((ChartValues<decimal>)SeriesCollection4[0].Values).Sum()}";
+        }
+
+        private async Task LossOfProfitTime()
+        {
+            var packages = await _repository.Load();
+            packages = packages
+                .Where(e => e.MeetingsHeld.Count != e.MeetingCount)
+                .ToList();
+            var groupedPackages = packages
+                .GroupBy(e => e.Name)
+                .ToList();
+            ((List<string>)Labels5[0].Labels).AddRange(groupedPackages.Select(e => e.Key));
+            SeriesCollection5[0].Values.AddRange(groupedPackages.Select(e =>
+            {
+                var lossOfProfitTime = 0m;
+                foreach (var package in e)
+                {
+                    lossOfProfitTime += (decimal)package.MeetingsUnheld.Count * package.Duration / 60;
+                }
+                return (object)lossOfProfitTime;
+            }));
+            LabelText4 = $"Loss of Profit (Time): {((ChartValues<decimal>)SeriesCollection5[0].Values).Sum()}";
         }
     }
 }

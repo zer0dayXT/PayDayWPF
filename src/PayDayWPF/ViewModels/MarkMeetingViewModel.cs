@@ -129,10 +129,18 @@ namespace PayDayWPF.ViewModels
                     return;
                 }
                 package.MeetingsHeld.Add(SelectedDate.Date);
-                await _repository.UpdateMeetings(package.Id, package.MeetingsHeld);
+                await _repository.UpdateMeetingsHeld(package.Id, package.MeetingsHeld);
             }
+
+            foreach (var package in UnheldMeetings)
+            {
+                package.MeetingsUnheld.Add(SelectedDate.Date);
+                await _repository.UpdateMeetingsUnheld(package.Id, package.MeetingsUnheld);
+            }
+
             MessageBox.Show("Success", "", MessageBoxButton.OK, MessageBoxImage.Information);
             HeldMeetings.Clear();
+            UnheldMeetings.Clear();
             Initialize();
         });
     }

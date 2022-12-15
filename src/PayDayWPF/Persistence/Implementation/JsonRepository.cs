@@ -28,11 +28,19 @@ namespace PayDayWPF.Persistence.Implementation
             await SaveAll(packages);
         }
 
-        public async Task UpdateMeetings(Guid id, List<DateTime> meetingsHeld)
+        public async Task UpdateMeetingsHeld(Guid id, List<DateTime> meetingsHeld)
         {
             var packages = await Load();
             var package = packages.Single(e => e.Id == id);
             package.MeetingsHeld = meetingsHeld;
+            await SaveAll(packages);
+        }
+
+        public async Task UpdateMeetingsUnheld(Guid id, List<DateTime> meetingsUnheld)
+        {
+            var packages = await Load();
+            var package = packages.Single(e => e.Id == id);
+            package.MeetingsUnheld = meetingsUnheld;
             await SaveAll(packages);
         }
 

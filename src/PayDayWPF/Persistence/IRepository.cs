@@ -9,6 +9,7 @@ namespace PayDayWPF.Persistence
     {
         public Task<List<Package>> Load();
         public Task AddPackage(Package package);
-        public Task UpdateMeetings(Guid id, List<DateTime> meetingsHeld);
+        public Task UpdateMeetingsHeld(Guid id, List<DateTime> meetingsHeld);
+        public Task UpdateMeetingsUnheld(Guid id, List<DateTime> meetingsHeld);
     }
 }

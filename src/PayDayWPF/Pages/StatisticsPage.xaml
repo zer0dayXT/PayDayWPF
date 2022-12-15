@@ -59,6 +59,30 @@
                     </Grid>
                 </Grid>
             </TabItem>
+            <TabItem Header="Loss of Profit">
+                <Grid Background="#FFE5E5E5">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Label Content="{Binding LabelText4}"/>
+                        <lvc:CartesianChart Grid.Row="1" Series="{Binding SeriesCollection4}" AxisY="{Binding AxesYCollection4}" AxisX="{Binding Labels4}"/>
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Loss of Profit (Time)">
+                <Grid Background="#FFE5E5E5">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Label Content="{Binding LabelText5}"/>
+                        <lvc:CartesianChart Grid.Row="1" Series="{Binding SeriesCollection5}" AxisY="{Binding AxesYCollection5}" AxisX="{Binding Labels5}"/>
+                    </Grid>
+                </Grid>
+            </TabItem>
         </TabControl>
     </Grid>
 </Page>
