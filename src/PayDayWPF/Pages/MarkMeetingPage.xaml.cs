@@ -1,6 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using PayDayWPF.Infrastructure;
-using System.Linq;
 using System.Windows.Controls;
 using PayDayWPF.ViewModels;
 using System.Windows.Input;
