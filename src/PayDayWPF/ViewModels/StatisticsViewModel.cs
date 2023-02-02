@@ -238,8 +238,19 @@ namespace PayDayWPF.ViewModels
                 OnPropertyChanged();
             }
         }
-        private string _labelText2;
 
+        private string _labelText1b;
+        public string LabelText1b
+        {
+            get => _labelText1b;
+            set
+            {
+                _labelText1b = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _labelText2;
         public string LabelText2
         {
             get => _labelText2;
@@ -515,6 +526,7 @@ namespace PayDayWPF.ViewModels
             SeriesCollection1[0].Values.AddRange(MonthlyIncome.Select(e => (object)e));
             SeriesCollection1[1].Values.Clear();
             SeriesCollection1[1].Values.AddRange(MonthlyHours.Select(e => (object)e));
+
             if (MonthlyIncome.Count(e => e != 0) == 0)
             {
                 LabelText1 = "No Data";
@@ -523,6 +535,50 @@ namespace PayDayWPF.ViewModels
             {
                 LabelText1 = $"PayDay: {MonthlyIncome.Sum()} ({(MonthlyIncome.Sum() / MonthlyIncome.Count(e => e != 0)).ToString("n2")})   " +
                     $"Time: {MonthlyHours.Sum()} ({(MonthlyHours.Sum() / MonthlyHours.Count(e => e != 0)).ToString("n2")})";
+            }
+            
+            var activePackages = packages
+                .Where(e => e.MeetingsHeld.Count != e.MeetingCount)
+                .DistinctBy(e => e.Name)
+                .ToList();
+            var hours = 0.0;
+            foreach (var package in activePackages)
+            {
+                hours += package.Duration * package.MeetingsPerWeek / 60;
+            }
+            LabelText1 += $"   Hours: {hours}h";
+
+            var monthlyIncomeFull = new decimal[12];
+            var monthlyHoursFull = new decimal[12];
+
+            Array.Copy(MonthlyIncome, monthlyIncomeFull, MonthlyIncome.Length);
+            for (var i = 11; i >= 0; i--)
+            {
+                if (monthlyIncomeFull[i] > 0)
+                {
+                    monthlyIncomeFull[i] = 0;
+                    break;
+                }
+            }
+
+            Array.Copy(MonthlyHours, monthlyHoursFull, MonthlyHours.Length);
+            for (var i = 11; i >= 0; i--)
+            {
+                if (monthlyHoursFull[i] > 0)
+                {
+                    monthlyHoursFull[i] = 0;
+                    break;
+                }
+            }
+
+            if (monthlyIncomeFull.Count(e => e != 0) == 0)
+            {
+                LabelText1b = "No Data";
+            }
+            else
+            {
+                LabelText1b = $"PayDay: {monthlyIncomeFull.Sum()} ({(monthlyIncomeFull.Sum() / monthlyIncomeFull.Count(e => e != 0)).ToString("n2")})   " +
+                    $"Time - 1: {monthlyHoursFull.Sum()} ({(monthlyHoursFull.Sum() / monthlyHoursFull.Count(e => e != 0)).ToString("n2")})";
             }
         }
 
@@ -599,7 +655,7 @@ namespace PayDayWPF.ViewModels
             }
             else
             {
-                LabelText3 = $":Held {((ChartValues<int>)SeriesCollection3[0].Values).Sum()}  " +
+                LabelText3 = $"Held {((ChartValues<int>)SeriesCollection3[0].Values).Sum()}  " +
                     $"Remaining: {((ChartValues<int>)SeriesCollection3[1].Values).Sum()}";
             }
         }

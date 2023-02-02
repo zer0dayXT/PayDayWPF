@@ -54,6 +54,17 @@ namespace PayDayWPF.ViewModels
             }
         }
 
+        private int? _meetingsPerWeek;
+        public int? MeetingsPerWeek
+        {
+            get => _meetingsPerWeek;
+            set
+            {
+                _meetingsPerWeek = value;
+                OnPropertyChanged();
+            }
+        }
+
         public AddPackageViewModel(IRepository repository)
         {
             _repository = repository;
@@ -63,7 +74,7 @@ namespace PayDayWPF.ViewModels
         {
             Task.Run(async () =>
             {
-                if (Name == null || Duration == null || MeetingProfit == null || MeetingCount == null)
+                if (Name == null || Duration == null || MeetingProfit == null || MeetingCount == null || MeetingsPerWeek == null)
                 {
                     MessageBox.Show("Error", "", MessageBoxButton.OK, MessageBoxImage.Information);
                     return;
@@ -73,12 +84,14 @@ namespace PayDayWPF.ViewModels
                     Name = Name,
                     Duration = Duration.Value,
                     MeetingProfit = MeetingProfit.Value,
-                    MeetingCount = MeetingCount.Value
+                    MeetingCount = MeetingCount.Value,
+                    MeetingsPerWeek = MeetingsPerWeek.Value
                 });
                 Name = null;
                 Duration = null;
                 MeetingProfit = null;
                 MeetingCount = null;
+                MeetingsPerWeek = null;
                 MessageBox.Show("Success", "", MessageBoxButton.OK, MessageBoxImage.Information);
             });
         });

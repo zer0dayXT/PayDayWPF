@@ -20,6 +20,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Label Content="Name"/>
@@ -36,6 +37,10 @@
             <StackPanel Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Label Content="Count"/>
                 <TextBox Text="{Binding MeetingCount}" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150"/>
+            </StackPanel>
+            <StackPanel Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Label Content="Meetings/Week"/>
+                <TextBox Text="{Binding MeetingsPerWeek}" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150"/>
             </StackPanel>
         </Grid>
         <Button Content="Add" Grid.Column="1" HorizontalAlignment="Stretch" Command="{Binding AddCommand}"/>
