@@ -250,6 +250,17 @@ namespace PayDayWPF.ViewModels
             }
         }
 
+        private string _labelText1c;
+        public string LabelText1c
+        {
+            get => _labelText1c;
+            set
+            {
+                _labelText1c = value;
+                OnPropertyChanged();
+            }
+        }
+
         private string _labelText2;
         public string LabelText2
         {
@@ -542,11 +553,12 @@ namespace PayDayWPF.ViewModels
                 .DistinctBy(e => e.Name)
                 .ToList();
             var hours = 0.0;
+            var activePackagesIncome = 0.0;
             foreach (var package in activePackages)
             {
                 hours += package.Duration * package.MeetingsPerWeek / 60;
+                activePackagesIncome += (double)package.MeetingProfit * package.MeetingsPerWeek;
             }
-            LabelText1 += $"   Hours: {hours}h";
 
             var monthlyIncomeFull = new decimal[12];
             var monthlyHoursFull = new decimal[12];
@@ -579,6 +591,28 @@ namespace PayDayWPF.ViewModels
             {
                 LabelText1b = $"PayDay: {monthlyIncomeFull.Sum()} ({(monthlyIncomeFull.Sum() / monthlyIncomeFull.Count(e => e != 0)).ToString("n2")})   " +
                     $"Time - 1: {monthlyHoursFull.Sum()} ({(monthlyHoursFull.Sum() / monthlyHoursFull.Count(e => e != 0)).ToString("n2")})";
+            }
+
+            var groupedDuration = activePackages
+                .GroupBy(e => (e.Duration, e.MeetingProfit))
+                .OrderBy(e => e.Key.Duration)
+                .ToList();
+
+            //$"45 - {count}, 60 - {count} total - {duration / 60}"
+            var meetingsByDurationCount = new List<string>();
+
+            foreach (var group in groupedDuration)
+            {
+                meetingsByDurationCount.Add($"{group.Key.Duration}({group.Key.MeetingProfit}): {group.Select(e => e.MeetingsPerWeek).Sum()}");
+            }
+            var separator = string.Join(" / ", meetingsByDurationCount);
+            if (monthlyIncomeFull.Count(e => e != 0) == 0)
+            {
+                LabelText1c = "No Data";
+            }
+            else
+            {
+                LabelText1c = $"Hours: {hours}h   Iph: {(activePackagesIncome / hours):n2}   {separator}";
             }
         }
 

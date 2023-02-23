@@ -16,13 +16,14 @@
                 <Grid Background="#FFE5E5E5">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="65"/>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="30"/>
                         </Grid.RowDefinitions>
                         <StackPanel Grid.Row="0">
                             <Label Content="{Binding LabelText1}" Padding="5,5,5,1"/>
                             <Label Content="{Binding LabelText1b}" Padding="5,1,5,1"/>
+                            <Label Content="{Binding LabelText1c}" Padding="5,1,5,1"/>
                         </StackPanel>
                         <lvc:CartesianChart Grid.Row="1" Series="{Binding SeriesCollection1}" AxisY="{Binding AxesYCollection1}" AxisX="{Binding Labels1}"/>
                         <Grid Grid.Row="2">
