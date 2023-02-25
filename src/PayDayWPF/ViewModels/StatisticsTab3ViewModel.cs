@@ -13,46 +13,46 @@ namespace PayDayWPF.ViewModels
     {
         private readonly IRepository _repository;
 
-        private SeriesCollection _seriesCollection3;
-        public SeriesCollection SeriesCollection3
+        private SeriesCollection _seriesCollection;
+        public SeriesCollection SeriesCollection
         {
-            get => _seriesCollection3;
+            get => _seriesCollection;
             set
             {
-                _seriesCollection3 = value;
+                _seriesCollection = value;
                 OnPropertyChanged();
             }
         }
 
-        private AxesCollection _axesYCollection3;
-        public AxesCollection AxesYCollection3
+        private AxesCollection _axesYCollection;
+        public AxesCollection AxesYCollection
         {
-            get => _axesYCollection3;
+            get => _axesYCollection;
             set
             {
-                _axesYCollection3 = value;
+                _axesYCollection = value;
                 OnPropertyChanged();
             }
         }
 
-        private AxesCollection _labels3;
-        public AxesCollection Labels3
+        private AxesCollection _labels;
+        public AxesCollection Labels
         {
-            get => _labels3;
+            get => _labels;
             set
             {
-                _labels3 = value;
+                _labels = value;
                 OnPropertyChanged();
             }
         }
 
-        private string _labelText3;
-        public string LabelText3
+        private string _labelText;
+        public string LabelText
         {
-            get => _labelText3;
+            get => _labelText;
             set
             {
-                _labelText3 = value;
+                _labelText = value;
                 OnPropertyChanged();
             }
         }
@@ -66,23 +66,23 @@ namespace PayDayWPF.ViewModels
 
         private void Initialize()
         {
-            AxesYCollection3 = new AxesCollection
+            AxesYCollection = new AxesCollection
             {
                 new Axis { MinValue = 0, Title = "Count", Foreground = Brushes.Green },
             };
 
-            Labels3 = new AxesCollection
+            Labels = new AxesCollection
             {
                 new Axis
                 {
                     Labels = new List<string>(),
                     LabelsRotation = 45,
                     Foreground = Brushes.Black,
-                    Separator = new LiveCharts.Wpf.Separator { Step = 1 },
+                    Separator = new Separator { Step = 1 },
                 }
             };
 
-            SeriesCollection3 = new SeriesCollection
+            SeriesCollection = new SeriesCollection
             {
                 new StackedColumnSeries
                 {
@@ -111,12 +111,12 @@ namespace PayDayWPF.ViewModels
             filteredPackages = filteredPackages
                 .Where(e => e.MeetingsHeld.Count != e.MeetingCount)
                 .ToList();
-            ((List<string>)Labels3[0].Labels).AddRange(filteredPackages.Select(e => e.Name));
-            SeriesCollection3[1].Values.AddRange(filteredPackages.Select(e => (object)(e.MeetingCount - e.MeetingsHeld.Count)));
-            SeriesCollection3[0].Values.AddRange(filteredPackages.Select(e => (object)e.MeetingsHeld.Count));
+            ((List<string>)Labels[0].Labels).AddRange(filteredPackages.Select(e => e.Name));
+            SeriesCollection[1].Values.AddRange(filteredPackages.Select(e => (object)(e.MeetingCount - e.MeetingsHeld.Count)));
+            SeriesCollection[0].Values.AddRange(filteredPackages.Select(e => (object)e.MeetingsHeld.Count));
 
-            LabelText3 = $"Held {((ChartValues<int>)SeriesCollection3[0].Values).Sum()}  " +
-                $"Remaining: {((ChartValues<int>)SeriesCollection3[1].Values).Sum()}";
+            LabelText = $"Held {((ChartValues<int>)SeriesCollection[0].Values).Sum()}  " +
+                $"Remaining: {((ChartValues<int>)SeriesCollection[1].Values).Sum()}";
         }
 
         private List<Package> MergePackages(List<Package> packages)

@@ -38,46 +38,46 @@ namespace PayDayWPF.ViewModels
             }
         }
 
-        private SeriesCollection _seriesCollection4;
-        public SeriesCollection SeriesCollection4
+        private SeriesCollection _seriesCollection;
+        public SeriesCollection SeriesCollection
         {
-            get => _seriesCollection4;
+            get => _seriesCollection;
             set
             {
-                _seriesCollection4 = value;
+                _seriesCollection = value;
                 OnPropertyChanged();
             }
         }
 
-        private AxesCollection _axesYCollection4;
-        public AxesCollection AxesYCollection4
+        private AxesCollection _axesYCollection;
+        public AxesCollection AxesYCollection
         {
-            get => _axesYCollection4;
+            get => _axesYCollection;
             set
             {
-                _axesYCollection4 = value;
+                _axesYCollection = value;
                 OnPropertyChanged();
             }
         }
 
-        private AxesCollection _labels4;
-        public AxesCollection Labels4
+        private AxesCollection _labels;
+        public AxesCollection Labels
         {
-            get => _labels4;
+            get => _labels;
             set
             {
-                _labels4 = value;
+                _labels = value;
                 OnPropertyChanged();
             }
         }
 
-        private string _labelText4;
-        public string LabelText4
+        private string _labelText;
+        public string LabelText
         {
-            get => _labelText4;
+            get => _labelText;
             set
             {
-                _labelText4 = value;
+                _labelText = value;
                 OnPropertyChanged();
             }
         }
@@ -91,12 +91,12 @@ namespace PayDayWPF.ViewModels
 
         private void Initialize()
         {
-            AxesYCollection4 = new AxesCollection
+            AxesYCollection = new AxesCollection
             {
                 new Axis { MinValue = 0, Title = "Lost Profit", Foreground = Brushes.Black, LabelFormatter = e => e.ToString("0.##") },
             };
 
-            Labels4 = new AxesCollection
+            Labels = new AxesCollection
             {
                 new Axis
                 {
@@ -107,7 +107,7 @@ namespace PayDayWPF.ViewModels
                 }
             };
 
-            SeriesCollection4 = new SeriesCollection
+            SeriesCollection = new SeriesCollection
             {
                 new ColumnSeries
                 {
@@ -123,8 +123,8 @@ namespace PayDayWPF.ViewModels
         {
             await _sync.WaitAsync();
 
-            ((List<string>)Labels4?[0].Labels)?.Clear();
-            SeriesCollection4?[0].Values?.Clear();
+            ((List<string>)Labels?[0].Labels)?.Clear();
+            SeriesCollection?[0].Values?.Clear();
 
             var packages = await _repository.Load();
             var activeUserNames = packages
@@ -138,8 +138,8 @@ namespace PayDayWPF.ViewModels
             var groupedPackages = activeUserPackages
                 .GroupBy(e => e.Name)
                 .ToList();
-            ((List<string>)Labels4[0].Labels).AddRange(groupedPackages.Select(e => e.Key));
-            SeriesCollection4[0].Values.AddRange(groupedPackages.Select(e =>
+            ((List<string>)Labels[0].Labels).AddRange(groupedPackages.Select(e => e.Key));
+            SeriesCollection[0].Values.AddRange(groupedPackages.Select(e =>
             {
                 var lossOfProfit = 0m;
                 foreach (var package in e)
@@ -151,7 +151,7 @@ namespace PayDayWPF.ViewModels
                 }
                 return (object)lossOfProfit;
             }));
-            LabelText4 = $"Loss of Profit: {((ChartValues<decimal>)SeriesCollection4[0].Values).Sum()}";
+            LabelText = $"Loss of Profit: {((ChartValues<decimal>)SeriesCollection[0].Values).Sum()}";
 
             _sync.Release();
         }

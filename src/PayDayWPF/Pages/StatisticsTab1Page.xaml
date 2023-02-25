@@ -19,10 +19,10 @@
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0">
                 <Label Content="{Binding LabelText1}" Padding="5,5,5,1"/>
-                <Label Content="{Binding LabelText1b}" Padding="5,1,5,1"/>
-                <Label Content="{Binding LabelText1c}" Padding="5,1,5,1"/>
+                <Label Content="{Binding LabelText2}" Padding="5,1,5,1"/>
+                <Label Content="{Binding LabelText3}" Padding="5,1,5,1"/>
             </StackPanel>
-            <lvc:CartesianChart Grid.Row="1" Series="{Binding SeriesCollection1}" AxisY="{Binding AxesYCollection1}" AxisX="{Binding Labels1}"/>
+            <lvc:CartesianChart Grid.Row="1" Series="{Binding SeriesCollection}" AxisY="{Binding AxesYCollection}" AxisX="{Binding Labels}"/>
             <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*"/>

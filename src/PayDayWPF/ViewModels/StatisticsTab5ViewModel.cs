@@ -27,46 +27,46 @@ namespace PayDayWPF.ViewModels
             }
         }
 
-        private SeriesCollection _seriesCollection5;
-        public SeriesCollection SeriesCollection5
+        private SeriesCollection _seriesCollection;
+        public SeriesCollection SeriesCollection
         {
-            get => _seriesCollection5;
+            get => _seriesCollection;
             set
             {
-                _seriesCollection5 = value;
+                _seriesCollection = value;
                 OnPropertyChanged();
             }
         }
 
-        private AxesCollection _axesYCollection5;
-        public AxesCollection AxesYCollection5
+        private AxesCollection _axesYCollection;
+        public AxesCollection AxesYCollection
         {
-            get => _axesYCollection5;
+            get => _axesYCollection;
             set
             {
-                _axesYCollection5 = value;
+                _axesYCollection = value;
                 OnPropertyChanged();
             }
         }
 
-        private AxesCollection _labels5;
-        public AxesCollection Labels5
+        private AxesCollection _labels;
+        public AxesCollection Labels
         {
-            get => _labels5;
+            get => _labels;
             set
             {
-                _labels5 = value;
+                _labels = value;
                 OnPropertyChanged();
             }
         }
 
-        private string _labelText5;
-        public string LabelText5
+        private string _labelText;
+        public string LabelText
         {
-            get => _labelText5;
+            get => _labelText;
             set
             {
-                _labelText5 = value;
+                _labelText = value;
                 OnPropertyChanged();
             }
         }
@@ -80,23 +80,23 @@ namespace PayDayWPF.ViewModels
 
         private void Initialize()
         {
-            AxesYCollection5 = new AxesCollection
+            AxesYCollection = new AxesCollection
             {
                 new Axis { MinValue = 0, Title = "Lost Profit (Time)", Foreground = Brushes.Black, LabelFormatter = e => e.ToString("0.##") },
             };
 
-            Labels5 = new AxesCollection
+            Labels = new AxesCollection
             {
                 new Axis
                 {
                     Labels = new List<string>(),
                     LabelsRotation = 45,
                     Foreground = Brushes.Black,
-                    Separator = new LiveCharts.Wpf.Separator { Step = 1 },
+                    Separator = new Separator { Step = 1 },
                 }
             };
 
-            SeriesCollection5 = new SeriesCollection
+            SeriesCollection = new SeriesCollection
             {
                 new ColumnSeries
                 {
@@ -112,8 +112,8 @@ namespace PayDayWPF.ViewModels
         {
             await _sync.WaitAsync();
 
-            ((List<string>)Labels5?[0].Labels)?.Clear();
-            SeriesCollection5?[0].Values?.Clear();
+            ((List<string>)Labels?[0].Labels)?.Clear();
+            SeriesCollection?[0].Values?.Clear();
 
             var packages = await _repository.Load();
             var activeUserNames = packages
@@ -127,8 +127,8 @@ namespace PayDayWPF.ViewModels
             var groupedPackages = activeUserPackages
                 .GroupBy(e => e.Name)
                 .ToList();
-            ((List<string>)Labels5[0].Labels).AddRange(groupedPackages.Select(e => e.Key));
-            SeriesCollection5[0].Values.AddRange(groupedPackages.Select(e =>
+            ((List<string>)Labels[0].Labels).AddRange(groupedPackages.Select(e => e.Key));
+            SeriesCollection[0].Values.AddRange(groupedPackages.Select(e =>
             {
                 var lossOfProfitTime = 0m;
                 foreach (var package in e)
@@ -140,7 +140,7 @@ namespace PayDayWPF.ViewModels
                 }
                 return (object)lossOfProfitTime;
             }));
-            LabelText5 = $"Loss of Profit (Time): {((ChartValues<decimal>)SeriesCollection5[0].Values).Sum()}";
+            LabelText = $"Loss of Profit (Time): {((ChartValues<decimal>)SeriesCollection[0].Values).Sum()}";
 
             _sync.Release();
         }

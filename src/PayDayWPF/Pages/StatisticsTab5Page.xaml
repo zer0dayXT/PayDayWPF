@@ -16,8 +16,8 @@
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Label Content="{Binding LabelText5}"/>
-            <lvc:CartesianChart Grid.Row="1" Series="{Binding SeriesCollection5}" AxisY="{Binding AxesYCollection5}" AxisX="{Binding Labels5}"/>
+            <Label Content="{Binding LabelText}"/>
+            <lvc:CartesianChart Grid.Row="1" Series="{Binding SeriesCollection}" AxisY="{Binding AxesYCollection}" AxisX="{Binding Labels}"/>
         </Grid>
     </Grid>
 </Page>

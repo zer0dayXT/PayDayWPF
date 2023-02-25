@@ -12,46 +12,46 @@ namespace PayDayWPF.ViewModels
     {
         private readonly IRepository _repository;
 
-        private SeriesCollection _seriesCollection2;
-        public SeriesCollection SeriesCollection2
+        private SeriesCollection _seriesCollection;
+        public SeriesCollection SeriesCollection
         {
-            get => _seriesCollection2;
+            get => _seriesCollection;
             set
             {
-                _seriesCollection2 = value;
+                _seriesCollection = value;
                 OnPropertyChanged();
             }
         }
 
-        private AxesCollection _axesYCollection2;
-        public AxesCollection AxesYCollection2
+        private AxesCollection _axesYCollection;
+        public AxesCollection AxesYCollection
         {
-            get => _axesYCollection2;
+            get => _axesYCollection;
             set
             {
-                _axesYCollection2 = value;
+                _axesYCollection = value;
                 OnPropertyChanged();
             }
         }
 
-        private AxesCollection _labels2;
-        public AxesCollection Labels2
+        private AxesCollection _labels;
+        public AxesCollection Labels
         {
-            get => _labels2;
+            get => _labels;
             set
             {
-                _labels2 = value;
+                _labels = value;
                 OnPropertyChanged();
             }
         }
 
-        private string _labelText2;
-        public string LabelText2
+        private string _labelText;
+        public string LabelText
         {
-            get => _labelText2;
+            get => _labelText;
             set
             {
-                _labelText2 = value;
+                _labelText = value;
                 OnPropertyChanged();
             }
         }
@@ -65,23 +65,23 @@ namespace PayDayWPF.ViewModels
 
         private void Initialize()
         {
-            AxesYCollection2 = new AxesCollection
+            AxesYCollection = new AxesCollection
             {
                 new Axis { MinValue = 0, Title = "Income", Foreground = Brushes.Green },
             };
 
-            Labels2 = new AxesCollection
+            Labels = new AxesCollection
             {
                 new Axis
                 {
                     Labels = new List<string>(),
                     LabelsRotation = 45,
                     Foreground = Brushes.Black,
-                    Separator = new LiveCharts.Wpf.Separator { Step = 1 },
+                    Separator = new Separator { Step = 1 },
                 }
             };
 
-            SeriesCollection2 = new SeriesCollection
+            SeriesCollection = new SeriesCollection
             {
                 new StackedColumnSeries
                 {
@@ -109,8 +109,8 @@ namespace PayDayWPF.ViewModels
             var groupedPackages = packages
                 .GroupBy(e => e.Name)
                 .ToList();
-            ((List<string>)Labels2[0].Labels).AddRange(groupedPackages.Select(e => e.Key));
-            SeriesCollection2[0].Values.AddRange(groupedPackages.Select(e =>
+            ((List<string>)Labels[0].Labels).AddRange(groupedPackages.Select(e => e.Key));
+            SeriesCollection[0].Values.AddRange(groupedPackages.Select(e =>
             {
                 var activePackage = e.Where(f => f.MeetingsHeld.Count > 0).FirstOrDefault();
                 if (activePackage == null)
@@ -120,7 +120,7 @@ namespace PayDayWPF.ViewModels
                 var activePackageIncome = activePackage.MeetingsHeld.Count * activePackage.MeetingProfit;
                 return (object)activePackageIncome;
             }));
-            SeriesCollection2[1].Values.AddRange(groupedPackages.Select(e =>
+            SeriesCollection[1].Values.AddRange(groupedPackages.Select(e =>
             {
                 var totalIncome = 0m;
                 foreach (var package in e)
@@ -131,8 +131,8 @@ namespace PayDayWPF.ViewModels
                 return (object)totalIncome;
             }));
 
-            LabelText2 = $"Income: {((ChartValues<decimal>)SeriesCollection2[0].Values).Sum()}  " +
-                $"Potential Income: {((ChartValues<decimal>)SeriesCollection2[1].Values).Sum()}";
+            LabelText = $"Income: {((ChartValues<decimal>)SeriesCollection[0].Values).Sum()}  " +
+                $"Potential Income: {((ChartValues<decimal>)SeriesCollection[1].Values).Sum()}";
         }
     }
 }

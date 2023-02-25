@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -16,7 +15,7 @@ namespace PayDayWPF.ViewModels
         private readonly IRepository _repository;
 
         private SeriesCollection _seriesCollection;
-        public SeriesCollection SeriesCollection1
+        public SeriesCollection SeriesCollection
         {
             get => _seriesCollection;
             set
@@ -26,24 +25,24 @@ namespace PayDayWPF.ViewModels
             }
         }
 
-        private AxesCollection _axesYCollection1;
-        public AxesCollection AxesYCollection1
+        private AxesCollection _axesYCollection;
+        public AxesCollection AxesYCollection
         {
-            get => _axesYCollection1;
+            get => _axesYCollection;
             set
             {
-                _axesYCollection1 = value;
+                _axesYCollection = value;
                 OnPropertyChanged();
             }
         }
 
-        private AxesCollection _labels1;
-        public AxesCollection Labels1
+        private AxesCollection _labels;
+        public AxesCollection Labels
         {
-            get => _labels1;
+            get => _labels;
             set
             {
-                _labels1 = value;
+                _labels = value;
                 OnPropertyChanged();
             }
         }
@@ -59,24 +58,24 @@ namespace PayDayWPF.ViewModels
             }
         }
 
-        private string _labelText1b;
-        public string LabelText1b
+        private string _labelText2;
+        public string LabelText2
         {
-            get => _labelText1b;
+            get => _labelText2;
             set
             {
-                _labelText1b = value;
+                _labelText2 = value;
                 OnPropertyChanged();
             }
         }
 
-        private string _labelText1c;
-        public string LabelText1c
+        private string _labelText3;
+        public string LabelText3
         {
-            get => _labelText1c;
+            get => _labelText3;
             set
             {
-                _labelText1c = value;
+                _labelText3 = value;
                 OnPropertyChanged();
             }
         }
@@ -137,13 +136,13 @@ namespace PayDayWPF.ViewModels
 
         private void Initialize()
         {
-            AxesYCollection1 = new AxesCollection
+            AxesYCollection = new AxesCollection
             {
                 new Axis { MinValue = 0, Title = "PayDay", Foreground = Brushes.Green },
                 new Axis { MinValue = 0, Title = "Time", Foreground = Brushes.DarkRed },
             };
 
-            Labels1 = new AxesCollection
+            Labels = new AxesCollection
             {
                 new Axis
                 {
@@ -153,11 +152,11 @@ namespace PayDayWPF.ViewModels
                         "January", "February", "March", "April", "May", "June", "July", "August"
                     },
                     Foreground = Brushes.Black,
-                    Separator = new LiveCharts.Wpf.Separator { Step = 1 },
+                    Separator = new Separator { Step = 1 },
                 }
             };
 
-            SeriesCollection1 = new SeriesCollection
+            SeriesCollection = new SeriesCollection
             {
                 new ColumnSeries
                 {
@@ -203,10 +202,10 @@ namespace PayDayWPF.ViewModels
                     MonthlyHours[(meetingsHeld.Month + 3) % 12] += ((decimal)package.Duration) / 60;
                 }
             }
-            SeriesCollection1[0].Values.Clear();
-            SeriesCollection1[0].Values.AddRange(MonthlyIncome.Select(e => (object)e));
-            SeriesCollection1[1].Values.Clear();
-            SeriesCollection1[1].Values.AddRange(MonthlyHours.Select(e => (object)e));
+            SeriesCollection[0].Values.Clear();
+            SeriesCollection[0].Values.AddRange(MonthlyIncome.Select(e => (object)e));
+            SeriesCollection[1].Values.Clear();
+            SeriesCollection[1].Values.AddRange(MonthlyHours.Select(e => (object)e));
 
             if (MonthlyIncome.Count(e => e != 0) == 0)
             {
@@ -255,11 +254,11 @@ namespace PayDayWPF.ViewModels
 
             if (monthlyIncomeFull.Count(e => e != 0) == 0)
             {
-                LabelText1b = "No Data";
+                LabelText2 = "No Data";
             }
             else
             {
-                LabelText1b = $"PayDay: {monthlyIncomeFull.Sum()} ({(monthlyIncomeFull.Sum() / monthlyIncomeFull.Count(e => e != 0)).ToString("n2")})   " +
+                LabelText2 = $"PayDay: {monthlyIncomeFull.Sum()} ({(monthlyIncomeFull.Sum() / monthlyIncomeFull.Count(e => e != 0)).ToString("n2")})   " +
                     $"Time - 1: {monthlyHoursFull.Sum()} ({(monthlyHoursFull.Sum() / monthlyHoursFull.Count(e => e != 0)).ToString("n2")})";
             }
 
@@ -276,11 +275,11 @@ namespace PayDayWPF.ViewModels
             var separator = string.Join(" / ", meetingsByDurationCount);
             if (monthlyIncomeFull.Count(e => e != 0) == 0)
             {
-                LabelText1c = "No Data";
+                LabelText3 = "No Data";
             }
             else
             {
-                LabelText1c = $"Hours: {hours}h   Iph: {(activePackagesIncome / hours):n2}   {separator}";
+                LabelText3 = $"Hours: {hours}h   Iph: {(activePackagesIncome / hours):n2}   {separator}";
             }
         }
     }
