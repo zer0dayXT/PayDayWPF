@@ -23,6 +23,11 @@ namespace PayDayWPF
             serviceCollection.AddTransient<MarkMeetingViewModel>();
             serviceCollection.AddTransient<RemainingMeetingsViewModel>();
             serviceCollection.AddTransient<StatisticsViewModel>();
+            serviceCollection.AddTransient<StatisticsTab1ViewModel>();
+            serviceCollection.AddTransient<StatisticsTab2ViewModel>();
+            serviceCollection.AddTransient<StatisticsTab3ViewModel>();
+            serviceCollection.AddTransient<StatisticsTab4ViewModel>();
+            serviceCollection.AddTransient<StatisticsTab5ViewModel>();
             serviceCollection.AddSingleton<IRepository, JsonRepository>();
             ServiceProvider = serviceCollection.BuildServiceProvider();
         }

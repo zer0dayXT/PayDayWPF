@@ -6,95 +6,26 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:viewModels="clr-namespace:PayDayWPF.ViewModels"
       d:DataContext="{d:DesignInstance viewModels:StatisticsViewModel}"
-      mc:Ignorable="d" 
+      mc:Ignorable="d"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="StatisticsPage">
 
     <Grid>
         <TabControl>
             <TabItem Header="Overall Statistics">
-                <Grid Background="#FFE5E5E5">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="65"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="30"/>
-                        </Grid.RowDefinitions>
-                        <StackPanel Grid.Row="0">
-                            <Label Content="{Binding LabelText1}" Padding="5,5,5,1"/>
-                            <Label Content="{Binding LabelText1b}" Padding="5,1,5,1"/>
-                            <Label Content="{Binding LabelText1c}" Padding="5,1,5,1"/>
-                        </StackPanel>
-                        <lvc:CartesianChart Grid.Row="1" Series="{Binding SeriesCollection1}" AxisY="{Binding AxesYCollection1}" AxisX="{Binding Labels1}"/>
-                        <Grid Grid.Row="2">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="2*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="2*"/>
-                            </Grid.ColumnDefinitions>
-                            <Button Command="{Binding PreviousCommand}" Grid.Column="0">Previous</Button>
-                            <Label Content="{Binding Years}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            <Button Command="{Binding NextCommand}" Grid.Column="2">Next</Button>
-                        </Grid>
-                    </Grid>
-                </Grid>
+                <Frame Source="StatisticsTab1Page.xaml" />
             </TabItem>
             <TabItem Header="Potential Income">
-                <Grid Background="#FFE5E5E5">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <Label Content="{Binding LabelText2}"/>
-                        <lvc:CartesianChart Grid.Row="1" Series="{Binding SeriesCollection2}" AxisY="{Binding AxesYCollection2}" AxisX="{Binding Labels2}"/>
-                    </Grid>
-                </Grid>
+                <Frame Source="StatisticsTab2Page.xaml" />
             </TabItem>
             <TabItem Header="Meetings Balance">
-                <Grid Background="#FFE5E5E5">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <Label Content="{Binding LabelText3}"/>
-                        <lvc:CartesianChart Grid.Row="1" Series="{Binding SeriesCollection3}" AxisY="{Binding AxesYCollection3}" AxisX="{Binding Labels3}"/>
-                    </Grid>
-                </Grid>
+                <Frame Source="StatisticsTab3Page.xaml" />
             </TabItem>
             <TabItem Header="Loss of Profit">
-                <Grid Background="#FFE5E5E5">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Label Content="{Binding LabelText4}"/>
-                        <lvc:CartesianChart Grid.Row="1" Series="{Binding SeriesCollection4}" AxisY="{Binding AxesYCollection4}" AxisX="{Binding Labels4}"/>
-                        <Grid Grid.Row="2">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <Slider Margin="30, 6, 30, 0" Maximum="11" TickPlacement="BottomRight" TickFrequency="1" IsSnapToTickEnabled="True" Value="{Binding MonthsScope}"/>
-                            <Label Margin="0, 0, 0, 10" Grid.Column="1" Content="{Binding SliderLabel}"/>
-                        </Grid>
-                    </Grid>
-                </Grid>
+                <Frame Source="StatisticsTab4Page.xaml" />
             </TabItem>
             <TabItem Header="Loss of Profit (Time)">
-                <Grid Background="#FFE5E5E5">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <Label Content="{Binding LabelText5}"/>
-                        <lvc:CartesianChart Grid.Row="1" Series="{Binding SeriesCollection5}" AxisY="{Binding AxesYCollection5}" AxisX="{Binding Labels5}"/>
-                    </Grid>
-                </Grid>
+                <Frame Source="StatisticsTab5Page.xaml" />
             </TabItem>
         </TabControl>
     </Grid>
