@@ -11,5 +11,11 @@ namespace PayDayWPF.Pages
             InitializeComponent();
             DataContext = MainWindow.ServiceProvider.GetService<MainMenuViewModel>();
         }
+
+        private void PasswordBox_OnKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            ((MainMenuViewModel)DataContext).Password = PasswordBox.Password;
+            ((MainMenuViewModel)DataContext).PasswordBox_OnKeyDown(sender, e);
+        }
     }
 }
