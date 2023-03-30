@@ -23,7 +23,7 @@
         <Button x:Name="remainingButton" Content="Remaining" Grid.Column="2" FontFamily="Segoe UI Black" FontSize="22" Command="{Binding NavigateToRemainingCommand}"/>
         <Button x:Name="statisticsButton" Content="Statistics" Grid.Column="3" FontFamily="Segoe UI Black" FontSize="22" Command="{Binding NavigateToStatisticsPage}"/>
         <Button x:Name="quitButton" Content="Quit" Grid.Column="4" FontFamily="Segoe UI Black" FontSize="22" Command="{Binding QuitCommand}"/>
-        <Grid Visibility="Hidden" Grid.Column="0" Grid.ColumnSpan="5" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+        <Grid Visibility="{Binding Visibility}" Grid.Column="0" Grid.ColumnSpan="5" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
             <PasswordBox x:Name="PasswordBox" MaxLength="15" Height="30" Width="250" FontFamily="Segoe UI Black" FontSize="22" KeyDown="PasswordBox_OnKeyDown"/>
         </Grid>
     </Grid>

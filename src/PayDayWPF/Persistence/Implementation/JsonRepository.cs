@@ -51,5 +51,9 @@ namespace PayDayWPF.Persistence.Implementation
                 await streamWriter.WriteLineAsync(JsonConvert.SerializeObject(packages, Formatting.Indented));
             }
         }
+
+        public void SetPassword(string password)
+        {
+        }
     }
 }

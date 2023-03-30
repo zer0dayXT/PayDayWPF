@@ -2,12 +2,31 @@
 using System.Windows;
 using System.Windows.Input;
 using PayDayWPF.Pages;
+using PayDayWPF.Persistence;
 
 namespace PayDayWPF.ViewModels
 {
     public class MainMenuViewModel : ViewModelBase
     {
+        private readonly IRepository _repository;
+
+        public MainMenuViewModel(IRepository repository)
+        {
+            _repository = repository;
+        }
+
         public string Password { get; set; }
+        
+        private Visibility _visibility = Visibility.Visible;
+        public Visibility Visibility
+        {
+            get => _visibility;
+            set
+            {
+                _visibility = value;
+                OnPropertyChanged();
+            }
+        }
 
         public ICommand QuitCommand => new RelayCommand(_ =>
         {
@@ -38,7 +57,8 @@ namespace PayDayWPF.ViewModels
         {
             if (e.Key == Key.Enter)
             {
-
+                Visibility = Visibility.Hidden;
+                _repository.SetPassword(Password);
             }
         }
     }

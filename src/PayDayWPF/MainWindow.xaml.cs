@@ -28,7 +28,7 @@ namespace PayDayWPF
             serviceCollection.AddTransient<StatisticsTab3ViewModel>();
             serviceCollection.AddTransient<StatisticsTab4ViewModel>();
             serviceCollection.AddTransient<StatisticsTab5ViewModel>();
-            serviceCollection.AddSingleton<IRepository, JsonRepository>();
+            serviceCollection.AddSingleton<IRepository, MongoDBRepository>();
             ServiceProvider = serviceCollection.BuildServiceProvider();
         }
 

@@ -11,5 +11,6 @@ namespace PayDayWPF.Persistence
         public Task AddPackage(Package package);
         public Task UpdateMeetingsHeld(Guid id, List<DateTime> meetingsHeld);
         public Task UpdateMeetingsUnheld(Guid id, List<DateTime> meetingsHeld);
+        public void SetPassword(string password);
     }
 }
