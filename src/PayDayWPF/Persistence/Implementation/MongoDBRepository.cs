@@ -1,4 +1,6 @@
-﻿using PayDayWPF.Infrastructure;
+﻿using MongoDB.Bson;
+using MongoDB.Driver;
+using PayDayWPF.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -9,9 +11,12 @@ namespace PayDayWPF.Persistence.Implementation
     {
         private string _password;
 
-        public Task AddPackage(Package package)
+        public async Task AddPackage(Package package)
         {
-            throw new NotImplementedException();
+            var mongoClient = new MongoClient($"mongodb://mo10097_payday:{_password}@mongo0.mydevil.net:27017/mo10097_payday");
+            var database = mongoClient.GetDatabase("mo10097_payday");
+            var collection = database.GetCollection<BsonDocument>("payday");
+            await collection.InsertOneAsync(package.ToBsonDocument());
         }
 
         public Task<List<Package>> Load()
